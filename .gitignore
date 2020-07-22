@@ -1,0 +1,9 @@
+*.nds
+*.exe
+CMakeLists.txt
+*.py
+build/
+.idea/
+cmake-build-*/
+*.sbin
+*.lcf.template

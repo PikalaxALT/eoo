@@ -1,0 +1,38 @@
+Static arm9
+{
+	Address 0x02004000
+}
+
+Autoload Main
+{
+	Address 0x02300000
+	Object arm9_main.o
+	Object _svc_mw.o
+	Object arm9_main_2.o
+	## Size    = 0x0001CF80 ##
+	## BSSSize = 0x00030DA0 ##
+}
+
+Autoload WRAM
+{
+	Address 0x0237D000
+	Object arm9_wram.o
+	## Size    = 0x000001A0 ##
+	## BSSSize = 0x00000000 ##
+}
+
+Autoload ITCM
+{
+	Address 0x01FF8000
+	Object arm9_itcm.o
+	## Size    = 0x000002E0 ##
+	## BSSSize = 0x00000000 ##
+}
+
+Autoload DTCM
+{
+	Address 0x027E0000
+	Object arm9_dtcm.o
+	## Size    = 0x00000060 ##
+	## BSSSize = 0x00000020 ##
+}

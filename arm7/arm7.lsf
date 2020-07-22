@@ -1,0 +1,31 @@
+Static arm7
+{
+	Address 0x02380000
+	Object crt0.o
+}
+
+Autoload WRAM
+{
+	Address 0x037F8000
+	Object arm7_main.o
+	Object libsyscall.o
+	Object arm7_main_2.o
+	## Size    = 0x0000A000 ##
+	## BSSSize = 0x00002548 ##
+}
+
+Autoload MAIN
+{
+	Address 0x0237E000
+	Object arm7_dtcm.o
+	## Size    = 0x00000240 ##
+	## BSSSize = 0x00000004 ##
+}
+
+Autoload EXT
+{
+	After arm7
+	Object arm7_wram.o
+	## Size    = 0x00019708 ##
+	## BSSSize = 0x00001590 ##
+}
