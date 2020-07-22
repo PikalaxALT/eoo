@@ -4064,7 +4064,7 @@ _037FB184:
 
 	arm_func_start FUN_037FB1A8
 FUN_037FB1A8: ; 0x037FB1A8
-	.word 0xE1010090
+	swp r0, r0, [r1]
 	bx lr
 	arm_func_end FUN_037FB1A8
 

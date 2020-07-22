@@ -33,7 +33,7 @@ FUN_0230F790: ; 0x0230F790
 	ldr r1, [r1]
 	cmp r1, #0
 	beq _0230F7BC
-	.word 0xE12FFF31
+	blx r1
 	add sp, sp, #4
 	ldmia sp!, {lr}
 	bx lr
@@ -57,7 +57,7 @@ FUN_0230F7D8: ; 0x0230F7D8
 	ldr r1, [r1]
 	cmp r1, #0
 	beq _0230F804
-	.word 0xE12FFF31
+	blx r1
 	add sp, sp, #4
 	ldmia sp!, {lr}
 	bx lr
@@ -850,7 +850,7 @@ _02310348:
 	ldr r1, [sp, #0x2c]
 	ldr r2, [sp, #0x20]
 	ldr r3, [r3]
-	.word 0xE12FFF33
+	blx r3
 	cmp r0, #0
 	ldr r0, [sp, #0x20]
 	add r0, r0, #1
@@ -998,7 +998,7 @@ _0231055C:
 	ldr r3, [r0]
 	mov r1, #0xff
 	mvn r2, #0
-	.word 0xE12FFF33
+	blx r3
 	cmp r0, #0
 	movne r0, #0
 	strne r0, [sp, #8]

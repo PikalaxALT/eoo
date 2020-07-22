@@ -6816,7 +6816,7 @@ _02305724:
 
 	arm_func_start FUN_02305748
 FUN_02305748: ; 0x02305748
-	.word 0xE1010090
+	swp r0, r0, [r1]
 	bx lr
 	arm_func_end FUN_02305748
 
