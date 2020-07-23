@@ -106,7 +106,7 @@ arm7:
 filesystem: ;
 
 $(ROM): rom.rsf arm9 arm7 filesystem tools/bin/rom_header.template.sbin
-	$(MAKEROM) -DBUILD_DIR="$(BUILD_DIR)" -DTITLE_NAME="$(TITLE_NAME)" -DNITROFS_FILES="$(NITROFS_FILES)" $< $@
+	$(MAKEROM) $< $@
 
 # Make sure build directory exists before compiling anything
 DUMMY != mkdir -p $(ALL_DIRS)
