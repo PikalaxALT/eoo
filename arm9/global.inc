@@ -34,3 +34,14 @@
 .extern SDK_STATIC_BSS_END
 .extern __sinit__
 .extern _0234DD10
+.extern FUN_02302C78
+.extern FUN_02302C88
+.extern FUN_02302C98
+.extern FUN_02302CA8
+.extern FUN_02302CB8
+.extern FUN_02302CC8
+.extern FUN_02302CD8
+.extern FUN_02302CE8
+.extern FUN_02302D94
+.extern _027E0060
+.extern _023463B4

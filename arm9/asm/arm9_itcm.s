@@ -33,7 +33,7 @@ _01FF8054: .word FUN_01FF8058
 
 	arm_func_start FUN_01FF8058
 FUN_01FF8058: ; 0x01FF8058
-	ldr ip, _01FF81A4 ; =0x027E0060
+	ldr ip, _01FF81A4 ; =_027E0060
 	mov r3, #0
 	ldr ip, [ip]
 	mov r2, #1
@@ -48,14 +48,14 @@ _01FF8070:
 	mov ip, r0
 	cmp ip, #0
 	bne _01FF8070
-	ldr ip, _01FF81A4 ; =0x027E0060
+	ldr ip, _01FF81A4 ; =_027E0060
 	str r3, [ip]
 	str r3, [ip, #4]
-	ldr ip, _01FF81A8 ; =0x023463B4
+	ldr ip, _01FF81A8 ; =_023463B4
 	mov r1, #1
 	strh r1, [ip]
 _01FF80A8:
-	ldr ip, _01FF81A8 ; =0x023463B4
+	ldr ip, _01FF81A8 ; =_023463B4
 	ldrh r1, [ip]
 	cmp r1, #0
 	ldreq pc, [sp], #4
@@ -123,8 +123,8 @@ _01FF8120:
 	stmda sp!, {r0, r1, r2, r3, ip, lr}
 	ldmia sp!, {pc}
 	.align 2, 0
-_01FF81A4: .word 0x027E0060
-_01FF81A8: .word 0x023463B4
+_01FF81A4: .word _027E0060
+_01FF81A8: .word _023463B4
 _01FF81AC: .word FUN_02307C34
 _01FF81B0: .word FUN_02307C74
 	arm_func_end FUN_01FF8058

@@ -28,7 +28,7 @@ FUN_0230F74C: ; 0x0230F74C
 FUN_0230F790: ; 0x0230F790
 	stmdb sp!, {lr}
 	sub sp, sp, #4
-	ldr r1, _0230F7D4 ; =0x0234DD14
+	ldr r1, _0230F7D4 ; =_0234DD14
 	mov r2, r0
 	ldr r1, [r1]
 	cmp r1, #0
@@ -45,14 +45,14 @@ _0230F7BC:
 	ldmia sp!, {lr}
 	bx lr
 	.align 2, 0
-_0230F7D4: .word 0x0234DD14
+_0230F7D4: .word _0234DD14
 	arm_func_end FUN_0230F790
 
 	arm_func_start FUN_0230F7D8
 FUN_0230F7D8: ; 0x0230F7D8
 	stmdb sp!, {lr}
 	sub sp, sp, #4
-	ldr r1, _0230F81C ; =0x0234DD10
+	ldr r1, _0230F81C ; =_0234DD10
 	mov r2, r0
 	ldr r1, [r1]
 	cmp r1, #0
@@ -69,7 +69,7 @@ _0230F804:
 	ldmia sp!, {lr}
 	bx lr
 	.align 2, 0
-_0230F81C: .word 0x0234DD10
+_0230F81C: .word _0234DD10
 	arm_func_end FUN_0230F7D8
 
 	arm_func_start FUN_0230F820
@@ -1862,7 +1862,7 @@ FUN_02311140: ; 0x02311140
 	ldr r0, [r7, #4]
 	sub r2, r2, #1
 	add r0, r4, r0, lsl #5
-	ldr r3, _02311314 ; =0x0231CF64
+	ldr r3, _02311314 ; =_0231CF64
 	str r2, [sp]
 	ldr r2, [r3, r4, lsl #2]
 	mov r1, r4
@@ -1977,7 +1977,7 @@ _023112E4:
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, fp, lr}
 	bx lr
 	.align 2, 0
-_02311314: .word 0x0231CF64
+_02311314: .word _0231CF64
 	arm_func_end FUN_02311140
 
 	arm_func_start FUN_02311318
@@ -2005,7 +2005,7 @@ FUN_02311318: ; 0x02311318
 	ldr r1, _0231147C ; =0x00010001
 	ldr r2, [r2]
 	cmp r2, r1
-	ldreq r5, _02311480 ; =0x02314254
+	ldreq r5, _02311480 ; =_02314254
 	beq _023113A8
 _0231137C:
 	ldr r1, [sb]
@@ -2013,13 +2013,13 @@ _0231137C:
 	cmp r1, #0x11
 	bne _02311398
 	cmp r0, #1
-	ldreq r5, _02311484 ; =0x0231426C
+	ldreq r5, _02311484 ; =_0231426C
 	beq _023113A8
 _02311398:
 	cmp r1, #3
 	bne _023113A8
 	cmp r0, #1
-	ldreq r5, _02311488 ; =0x02314260
+	ldreq r5, _02311488 ; =_02314260
 _023113A8:
 	mov r7, #1
 	mov r6, r7
@@ -2081,9 +2081,9 @@ _02311468:
 	bx lr
 	.align 2, 0
 _0231147C: .word 0x00010001
-_02311480: .word 0x02314254
-_02311484: .word 0x0231426C
-_02311488: .word 0x02314260
+_02311480: .word _02314254
+_02311484: .word _0231426C
+_02311488: .word _02314260
 	arm_func_end FUN_02311318
 
 	arm_func_start FUN_0231148C
@@ -4723,18 +4723,18 @@ _023138CC:
 _023138D8:
 	mov r1, r0, lsr r2
 	ands r0, r1, #0xf0
-	ldreq r0, _02313908 ; =0x02314278
+	ldreq r0, _02313908 ; =_02314278
 	ldreqsb r0, [r0, r1]
 	addeq r0, r0, r2
 	bxeq lr
-	ldr r0, _02313908 ; =0x02314278
+	ldr r0, _02313908 ; =_02314278
 	mov r1, r1, lsr #4
 	ldrsb r0, [r0, r1]
 	add r0, r0, r2
 	add r0, r0, #4
 	bx lr
 	.align 2, 0
-_02313908: .word 0x02314278
+_02313908: .word _02314278
 	arm_func_end FUN_023138AC
 
 	arm_func_start FUN_0231390C
@@ -5001,8 +5001,16 @@ FUN_02313B18: ; 0x02313B18
 	.rodata
 _02314254:
 	.byte 0x00, 0x08, 0x01, 0x01, 0x01, 0x10, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00
-	.byte 0x00, 0x08, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x01, 0x01
-	.byte 0x01, 0x04, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x02, 0x03, 0x03, 0x03, 0x03
+
+_02314260:
+	.byte 0x00, 0x08, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00
+
+_0231426C:
+	.byte 0x00, 0x08, 0x01, 0x01
+	.byte 0x01, 0x04, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00
+
+_02314278:
+	.byte 0x00, 0x01, 0x02, 0x02, 0x03, 0x03, 0x03, 0x03
 	.byte 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04, 0x04
 
 _02314288:
@@ -5042,4 +5050,7 @@ _0231CF64:
 	.bss
 	.global _0234DD10
 _0234DD10:
+	.space 0x4
+
+_0234DD14:
 	.space 0x4
