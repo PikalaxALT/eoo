@@ -49,18 +49,25 @@ OVERLAYS :=
 # Directories containing source files
 SRC_DIRS := src
 ASM_DIRS := asm
+LIBSRC_DIRS := lib/stdlib
 LIBASM_DIRS := lib/syscall
 
 # sorting wildcards required for versions of make >= 3.8.2 and < 4.3 for consistent builds
 C_FILES := $(foreach dir,$(SRC_DIRS),$(sort $(wildcard $(dir)/*.c)))
+CXX_FILES := $(foreach dir,$(SRC_DIRS),$(sort $(wildcard $(dir)/*.cpp)))
 S_FILES := $(foreach dir,$(ASM_DIRS),$(sort $(wildcard $(dir)/*.s)))
+LIBC_FILES := $(foreach dir,$(LIBSRC_DIRS),$(sort $(wildcard $(dir)/*.c)))
+LIBCXX_FILES := $(foreach dir,$(LIBSRC_DIRS),$(sort $(wildcard $(dir)/*.cpp)))
 LIBS_FILES := $(foreach dir,$(LIBASM_DIRS),$(sort $(wildcard $(dir)/*.s)))
 
 C_OBJS = $(C_FILES:%.c=$(BUILD_DIR)/%.o)
+CXX_OBJS = $(C_FILES:%.cpp=$(BUILD_DIR)/%.o)
 S_OBJS = $(S_FILES:%.s=$(BUILD_DIR)/%.o)
+LIBC_OBJS = $(LIBC_FILES:%.c=$(BUILD_DIR)/%.o)
+LIBCXX_OBJS = $(LIBC_FILES:%.cpp=$(BUILD_DIR)/%.o)
 LIBS_OBJS = $(LIBS_FILES:%.s=$(BUILD_DIR)/%.o)
 
-O_FILES := $(C_OBJS) $(S_OBJS)
+O_FILES := $(C_OBJS) $(CXX_OBJS) $(S_OBJS)
 OBJS_REL = $(patsubst $(BUILD_DIR)/%,%,$(O_FILES))
 
 ## Compiler Options
@@ -83,19 +90,19 @@ MAKELCF = $(WINE) $(TOOLS_DIR)/bin/makelcf.exe
 
 AS      = $(WINE) $(MWASMARM)
 CC      = $(WINE) $(MWCCARM)
+CXX     = $(WINE) $(MWCCARM)
 CPP     := cpp -P
 LD      = $(WINE) $(MWLDARM)
 AR      := $(CROSS)ar
 OBJDUMP := $(CROSS)objdump
 OBJCOPY := $(CROSS)objcopy
 
-# ./tools/mwccarm/2.0/base/mwasmarm.exe -proc arm5te asm/arm9_thumb.s -o arm9.o
 ASFLAGS = -proc arm5te
-CFLAGS = -O4,p -gccext,on -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -i include -ir include-mw -ir arm9/lib/include -W all
+CFLAGS = -O4,p -gccext,on -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -i include -ir lib/include -W all
 LDFLAGS = -map -nodead -w off -proc v5te -interworking -map -symtab -m _start
-LIBS := -Llib -lsyscall
+LIBS := -Llib -lsyscall -lstdlib
 ARFLAGS = rcS
-STATIC_LIBS := $(addprefix $(BUILD_DIR)/lib/,libsyscall.a)
+STATIC_LIBS := $(addprefix $(BUILD_DIR)/lib/,libsyscall.a libstdlib.a)
 
 # DS TOOLS
 SHA1SUM   = sha1sum
@@ -154,19 +161,26 @@ clean-tools:
 ## Actual files
 
 ifeq (,$(NODEP))
-$(BUILD_DIR)/%.o: dep = $(shell $(SCANINC) -I include -I lib/include $(filter $*.c,$(C_FILES)) $(filter $*.s,$(S_FILES) $(LIBS_FILES)))
+$(BUILD_DIR)/%.o: dep = $(shell $(SCANINC) -I include -I lib/include $(filter $*.c,$(C_FILES)) $(filter $*.c,$(CXX_FILES)) $(filter $*.s,$(S_FILES) $(LIBS_FILES)))
 else
 $(BUILD_DIR)/%.o: dep :=
 endif
 
-$(C_OBJS): $(BUILD_DIR)/%.o: %.c $$(dep)
+$(LIBC_OBJS): CFLAGS = -O4,p -gccext,on -proc arm946e -fp soft -lang c99 -i include -ir lib/include -W all
+$(C_OBJS) $(LIBC_OBJS): $(BUILD_DIR)/%.o: %.c $$(dep)
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 $(S_OBJS) $(LIBS_OBJS): $(BUILD_DIR)/%.o: %.s $$(dep)
 	$(AS) $(ASFLAGS) -o $@ $<
 
-SYSCALL_OBJS := $(BUILD_DIR)/lib/syscall/_secure_disable.o
+SYSCALL_SRCS := $(wildcard lib/syscall/*.s)
+SYSCALL_OBJS := $(SYSCALL_SRCS:%.s=$(BUILD_DIR)/%.o)
 $(BUILD_DIR)/lib/libsyscall.a: $(SYSCALL_OBJS)
+	$(AR) $(ARFLAGS) -o $@ $^
+
+STDLIB_SRCS := $(wildcard lib/stdlib/*.c)
+STDLIB_OBJS := $(STDLIB_SRCS:%.c=$(BUILD_DIR)/%.o)
+$(BUILD_DIR)/lib/libstdlib.a: $(STDLIB_OBJS)
 	$(AR) $(ARFLAGS) -o $@ $^
 
 $(BUILD_DIR)/$(LD_SCRIPT): $(LD_SPEC) $(LD_TEMPLATE)

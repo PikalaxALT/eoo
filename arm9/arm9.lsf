@@ -1,6 +1,7 @@
 Static arm9
 {
 	Address 0x02004000
+	Object dumb_shift.o
 }
 
 Autoload Main
@@ -9,6 +10,7 @@ Autoload Main
 	Object arm9_main.o
 	Object _svc_mw.o
 	Object arm9_main_2.o
+	Library libstdlib.a
 	## Size    = 0x0001CF80 ##
 	## BSSSize = 0x00030DA0 ##
 }

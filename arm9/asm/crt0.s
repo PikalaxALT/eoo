@@ -287,10 +287,3 @@ _start_ModuleParams: ; 0x02004B68
 	.word 0xdec00621
 	.word 0x2106c0de
 	; 0x02004B8C
-	; Exception
-
-	.word __call_static_initializers
-	.word 0x0000002D
-	.word 0x00100100
-
-	.space 32

@@ -32,3 +32,4 @@
 .extern SDK_AUTOLOAD_START
 .extern SDK_STATIC_BSS_START
 .extern SDK_STATIC_BSS_END
+.extern __sinit__

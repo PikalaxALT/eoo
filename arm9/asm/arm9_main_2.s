@@ -5003,24 +5003,6 @@ _fp_init: ; 0x02313CFC
 	bx lr
 	arm_func_end _fp_init
 
-	arm_func_start __call_static_initializers
-__call_static_initializers: ; 0x02313D00
-	stmdb sp!, {r4, lr}
-	ldr r4, _02313D28 ; =0x02004B98
-	b _02313D14
-_02313D0C:
-	blx r0
-	add r4, r4, #4
-_02313D14:
-	cmp r4, #0
-	ldrne r0, [r4]
-	cmpne r0, #0
-	bne _02313D0C
-	ldmia sp!, {r4, pc}
-	.align 2, 0
-_02313D28: .word 0x02004B98
-	arm_func_end __call_static_initializers
-
 	.rodata
 _02314BB0:
 	.byte 0xFC, 0xFF, 0xFC, 0xFF, 0xFC, 0xFF, 0xFC, 0xFF, 0xFC, 0xFF, 0xFC, 0xFF, 0xFC, 0xFF, 0xFC, 0xFF
