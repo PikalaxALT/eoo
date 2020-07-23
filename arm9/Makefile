@@ -98,7 +98,7 @@ OBJDUMP := $(CROSS)objdump
 OBJCOPY := $(CROSS)objcopy
 
 ASFLAGS = -proc arm5te
-CFLAGS = -O4,p -gccext,on -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -i include -ir lib/include -W all
+CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -i include -ir lib/include -W all
 LDFLAGS = -map -nodead -w off -proc v5te -interworking -map -symtab -m _start
 LIBS := -Llib -lsyscall -lstdlib
 ARFLAGS = rcS
@@ -166,19 +166,19 @@ else
 $(BUILD_DIR)/%.o: dep :=
 endif
 
-$(LIBC_OBJS): CFLAGS = -O4,p -gccext,on -proc arm946e -fp soft -lang c99 -i include -ir lib/include -W all
+$(LIBC_OBJS): CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -i include -ir lib/include -W all
 $(C_OBJS) $(LIBC_OBJS): $(BUILD_DIR)/%.o: %.c $$(dep)
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 $(S_OBJS) $(LIBS_OBJS): $(BUILD_DIR)/%.o: %.s $$(dep)
 	$(AS) $(ASFLAGS) -o $@ $<
 
-SYSCALL_SRCS := $(wildcard lib/syscall/*.s)
+SYSCALL_SRCS := lib/syscall/_secure_disable.s
 SYSCALL_OBJS := $(SYSCALL_SRCS:%.s=$(BUILD_DIR)/%.o)
 $(BUILD_DIR)/lib/libsyscall.a: $(SYSCALL_OBJS)
 	$(AR) $(ARFLAGS) -o $@ $^
 
-STDLIB_SRCS := $(wildcard lib/stdlib/*.c)
+STDLIB_SRCS := lib/stdlib/_sinit.c
 STDLIB_OBJS := $(STDLIB_SRCS:%.c=$(BUILD_DIR)/%.o)
 $(BUILD_DIR)/lib/libstdlib.a: $(STDLIB_OBJS)
 	$(AR) $(ARFLAGS) -o $@ $^

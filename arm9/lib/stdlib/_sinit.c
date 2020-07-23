@@ -2,6 +2,11 @@
 
 extern void (*__sinit__[])(void);
 
+void _fp_init(void)
+{
+
+}
+
 void __call_static_initializers(void)
 {
     void (**sinit_p)() = __sinit__;
