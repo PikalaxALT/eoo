@@ -117,7 +117,7 @@ export LM_LICENSE_FILE := $(TOOLS_DIR)/mwccarm/license.dat
 export MWCIncludes := lib/include
 export MWLibraries := lib
 
-ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS) $(LIBASM_DIRS))
+ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS) $(LIBSRC_DIRS) $(LIBASM_DIRS))
 
 ## Targets
 
