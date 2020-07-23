@@ -33,3 +33,4 @@
 .extern SDK_STATIC_BSS_START
 .extern SDK_STATIC_BSS_END
 .extern __sinit__
+.extern _0234DD10
