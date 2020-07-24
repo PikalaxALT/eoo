@@ -6374,5 +6374,26 @@ _03804314:
 _03804350:
 	.space 0x10
 
+	.global _03804360
 _03804360:
-	.space 0x1E8
+	.space 0x20
+
+	.global _03804380
+_03804380:
+	.space 0xA4
+
+	.global _03804424
+_03804424:
+	.space 0xA4
+
+	.global _038044C8
+_038044C8:
+	.space 0x2C
+
+	.global _038044F4
+_038044F4:
+	.space 0x2C
+
+	.global _03804520
+_03804520:
+	.space 0x28

@@ -103,7 +103,7 @@ FUN_0237E104: ; 0x0237E104
 	ldr r2, _0237E134 ; =0x027FFC40
 	str r0, [r1]
 	ldrh r0, [r2]
-	ldr ip, _0237E138 ; =0x037FB3A8
+	ldr ip, _0237E138 ; =FUN_037FB3A8
 	cmp r0, #2
 	movne r0, #1
 	strneh r0, [r2]
@@ -113,7 +113,7 @@ FUN_0237E104: ; 0x0237E104
 	.align 2, 0
 _0237E130: .word _0237E240
 _0237E134: .word 0x027FFC40
-_0237E138: .word 0x037FB3A8
+_0237E138: .word FUN_037FB3A8
 _0237E13C: .word FUN_0237E094
 	arm_func_end FUN_0237E104
 

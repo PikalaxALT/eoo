@@ -109,3 +109,9 @@
 .extern _03803F24
 .extern _03801F04
 .extern _03802E58
+.extern _03804360
+.extern _03804380
+.extern _03804424
+.extern _038044C8
+.extern _038044F4
+.extern _03804520
