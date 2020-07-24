@@ -63,7 +63,7 @@ FUN_0237E094: ; 0x0237E094
 	cmp r0, #1
 	cmpeq r1, #1
 	bne _0237E0BC
-	ldr r0, _0237E0C4 ; =0x0237E240
+	ldr r0, _0237E0C4 ; =_0237E240
 	ldr r0, [r0]
 	cmp r0, #0
 	beq _0237E0BC
@@ -73,7 +73,7 @@ _0237E0BC:
 	ldmia sp!, {r3, lr}
 	bx lr
 	.align 2, 0
-_0237E0C4: .word 0x0237E240
+_0237E0C4: .word _0237E240
 	arm_func_end FUN_0237E094
 
 	arm_func_start FUN_0237E0C8
@@ -99,7 +99,7 @@ _0237E100: .word 0x023FE840
 
 	arm_func_start FUN_0237E104
 FUN_0237E104: ; 0x0237E104
-	ldr r1, _0237E130 ; =0x0237E240
+	ldr r1, _0237E130 ; =_0237E240
 	ldr r2, _0237E134 ; =0x027FFC40
 	str r0, [r1]
 	ldrh r0, [r2]
@@ -111,7 +111,7 @@ FUN_0237E104: ; 0x0237E104
 	mov r0, #1
 	bx ip
 	.align 2, 0
-_0237E130: .word 0x0237E240
+_0237E130: .word _0237E240
 _0237E134: .word 0x027FFC40
 _0237E138: .word 0x037FB3A8
 _0237E13C: .word FUN_0237E094
@@ -193,4 +193,5 @@ _0237E238: .word 0x04000102
 _0237E23C: .word 0x04000184
 
 	.bss
+_0237E240:
 	.space 4
