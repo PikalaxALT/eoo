@@ -30203,12 +30203,14 @@ _02399940:
 _02399960:
 	.space 0xF58
 
+	.global _0239A8B8
 _0239A8B8:
 	.space 0x128
 
 _0239A9E0:
 	.space 0x400
 
+	.global _0239ADE0
 _0239ADE0:
 	.space 0x2C
 
