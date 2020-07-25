@@ -12,8 +12,8 @@ FUN_037F8000: ; 0x037F8000
 	bx lr
 	arm_func_end FUN_037F8000
 
-	arm_func_start NitroMain
-NitroMain: ; 0x037F8014
+	arm_func_start NitroSpMain
+NitroSpMain: ; 0x037F8014
 	stmdb sp!, {r3, r4, r5, r6, r7, r8, sb, sl, lr}
 	sub sp, sp, #0x14c
 	bl FUN_037F9A50
@@ -259,7 +259,7 @@ _037F83A0: .word _038025C8
 _037F83A4: .word _038025C8
 _037F83A8: .word _03802004
 _037F83AC: .word _03802E58
-	arm_func_end NitroMain
+	arm_func_end NitroSpMain
 
 	arm_func_start FUN_037F83B0
 FUN_037F83B0: ; 0x037F83B0
@@ -286,8 +286,8 @@ _037F83F4: .word _03802000
 _037F83F8: .word _03803F24
 	arm_func_end FUN_037F83B0
 
-	arm_func_start FUN_037F83FC
-FUN_037F83FC: ; 0x037F83FC
+	arm_func_start OS_IrqHandler
+OS_IrqHandler: ; 0x037F83FC
 	stmdb sp!, {lr}
 	mov ip, #0x4000000
 	add ip, ip, #0x210
@@ -306,15 +306,15 @@ _037F8428:
 	str r2, [ip, #4]
 	ldr r1, _037F8448 ; =_03801F04
 	ldr r0, [r1, r0, lsl #2]
-	ldr lr, _037F844C ; =FUN_037F8450
+	ldr lr, _037F844C ; =OS_IrqHandler_ThreadSwitch
 	bx r0
 	.align 2, 0
 _037F8448: .word _03801F04
-_037F844C: .word FUN_037F8450
-	arm_func_end FUN_037F83FC
+_037F844C: .word OS_IrqHandler_ThreadSwitch
+	arm_func_end OS_IrqHandler
 
-	arm_func_start FUN_037F8450
-FUN_037F8450: ; 0x037F8450
+	arm_func_start OS_IrqHandler_ThreadSwitch
+OS_IrqHandler_ThreadSwitch: ; 0x037F8450
 	ldr ip, _037F856C ; =_03802DC8
 	mov r3, #0
 	ldr ip, [ip]
@@ -369,7 +369,7 @@ _037F84F0:
 	stmdb sp!, {r0, r1, ip}
 	mov lr, pc
 	bx r3
-	arm_func_end FUN_037F8450
+	arm_func_end OS_IrqHandler_ThreadSwitch
 
 	arm_func_start FUN_037F8514
 FUN_037F8514: ; 0x037F8514

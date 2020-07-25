@@ -21,7 +21,7 @@
 .extern SVC_SoundBiasSet
 .extern SVC_WaitByLoop
 .extern _03801EF0
-.extern FUN_037F8450
+.extern OS_IrqHandler_ThreadSwitch
 .extern FUN_037F8774
 .extern FUN_037F87B0
 .extern FUN_037F87E8
@@ -90,7 +90,7 @@
 .extern SDK_AUTOLOAD_START
 .extern SDK_STATIC_BSS_END
 .extern SDK_STATIC_BSS_START
-.extern NitroMain
+.extern NitroSpMain
 .extern _03801C38
 .extern FUN_037F85D0
 .extern FUN_037F8628
@@ -106,7 +106,9 @@
 .extern _03801C5C
 .extern _03801C60
 .extern SDK_AUTOLOAD_WRAM_BSS_END
+.extern SDK_STATIC_BSS_START
 .extern _03803F24
+.extern OS_IrqHandler
 .extern _03801F04
 .extern _03802E58
 .extern _03804360

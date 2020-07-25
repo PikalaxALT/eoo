@@ -124,8 +124,8 @@ _02300150:
 	ldmia sp!, {r3, r4, r5, pc}
 	arm_func_end FUN_0230013C
 
-	arm_func_start NitroMain
-NitroMain: ; 0x02300164
+	arm_func_start NitroSpMain
+NitroSpMain: ; 0x02300164
 	stmdb sp!, {r4, r5, r6, r7, lr}
 	sub sp, sp, #0x3c
 	sub sp, sp, #0x800
@@ -1088,7 +1088,7 @@ _02300F58: .word 0x88888889
 _02300F5C: .word 0xAAAAAAAB
 _02300F60: .word 0x0000FFFF
 _02300F64: .word _023140B6
-	arm_func_end NitroMain
+	arm_func_end NitroSpMain
 
 	arm_func_start FUN_02300F68
 FUN_02300F68: ; 0x02300F68

@@ -4476,7 +4476,7 @@ FUN_038006F0: ; 0x038006F0
 	ldmia sp!, {r0}
 	msr spsr_fc, r0
 	tst r1, r1
-	ldreq r0, _03800784 ; =FUN_037F8450
+	ldreq r0, _03800784 ; =OS_IrqHandler_ThreadSwitch
 	adreq lr, _0380076C
 	bxeq r0
 _0380076C:
@@ -4487,7 +4487,7 @@ _03800774: .word _03802E58
 _03800778: .word _03804350
 _0380077C: .word _03801C64
 _03800780: .word _03801F04
-_03800784: .word FUN_037F8450
+_03800784: .word OS_IrqHandler_ThreadSwitch
 	arm_func_end FUN_038006F0
 
 	arm_func_start FUN_03800788

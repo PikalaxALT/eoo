@@ -7,7 +7,7 @@
 _start: ; 0x02380000
 	mov ip, #0x4000000
 	str ip, [ip, #0x208]
-	ldr r1, _023800CC ; =0x023801B0
+	ldr r1, _023800CC ; =SDK_STATIC_BSS_START
 	mov r0, #0x3800000
 	cmp r0, r1
 	movpl r1, r0
@@ -45,7 +45,7 @@ _02380080:
 	cmp r1, r2
 	bmi _02380080
 	bl do_autoload
-	ldr r0, _023800EC ; =0x02380198
+	ldr r0, _023800EC ; =_start_ModuleParams
 	ldr r1, [r0, #0xc]
 	ldr r2, [r0, #0x10]
 	mov r0, #0
@@ -53,15 +53,15 @@ _023800A4:
 	cmp r1, r2
 	strlo r0, [r1], #4
 	blo _023800A4
-	bl FUN_0238015C
+	bl detect_main_memory_size
 	ldr r1, _023800F0 ; =0x0380FFFC
-	ldr r0, _023800F4 ; =0x037F83FC
+	ldr r0, _023800F4 ; =OS_IrqHandler
 	str r0, [r1]
-	ldr r1, _023800F8 ; =NitroMain
+	ldr r1, _023800F8 ; =NitroSpMain
 	ldr lr, _023800FC ; =0xFFFF0000
 	bx r1
 	.align 2, 0
-_023800CC: .word 0x023801B0
+_023800CC: .word SDK_STATIC_BSS_START
 _023800D0: .word 0x0380FF00
 _023800D4: .word 0x0380FFC0
 _023800D8: .word 0x0380FF80
@@ -69,16 +69,16 @@ _023800DC: .word 0x00000200
 _023800E0: .word 0x023FE940
 _023800E4: .word 0x027FFA80
 _023800E8: .word 0x023FE904
-_023800EC: .word 0x02380198
+_023800EC: .word _start_ModuleParams
 _023800F0: .word 0x0380FFFC
-_023800F4: .word 0x037F83FC
-_023800F8: .word NitroMain
+_023800F4: .word OS_IrqHandler
+_023800F8: .word NitroSpMain
 _023800FC: .word 0xFFFF0000
 	arm_func_end _start
 
 	arm_func_start do_autoload
 do_autoload: ; 0x02380100
-	ldr r0, _02380154 ; =0x02380198
+	ldr r0, _02380154 ; =_start_ModuleParams
 	ldr r1, [r0]
 	ldr r2, [r0, #4]
 	ldr r3, [r0, #8]
@@ -104,16 +104,16 @@ _02380140:
 _02380150:
 	b _start_AutoloadDoneCallback
 	.align 2, 0
-_02380154: .word 0x02380198
+_02380154: .word _start_ModuleParams
 	arm_func_end do_autoload
 
 	arm_func_start _start_AutoloadDoneCallback
 _start_AutoloadDoneCallback:
 	bx lr
-	arm_func_end do_autoload
+	arm_func_end _start_AutoloadDoneCallback
 
-	arm_func_start FUN_0238015C
-FUN_0238015C: ; 0x0238015C
+	arm_func_start detect_main_memory_size
+detect_main_memory_size: ; 0x0238015C
 	mov r0, #1
 	mov r1, #0
 	ldr r2, _02380194 ; =0x027FFFFA
@@ -132,7 +132,7 @@ _0238018C:
 	bx lr
 	.align 2, 0
 _02380194: .word 0x027FFFFA
-	arm_func_end FUN_0238015C
+	arm_func_end detect_main_memory_size
 	; 0x02380198
 
 _start_ModuleParams: ; 0x02380198
