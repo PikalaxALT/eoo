@@ -4442,7 +4442,7 @@ _038006A0:
 _038006E0:
 	ldr r1, [ip, #0x210]
 	stmdb sp!, {r1}
-	add lr, pc, #0x0 ; =FUN_038006F0
+	adr lr, FUN_038006F0
 	bx r0
 	arm_func_end FUN_03800604
 
@@ -4471,7 +4471,7 @@ FUN_038006F0: ; 0x038006F0
 	mov r0, #0x92
 	msr cpsr_c, r0
 	ldmia sp, {sp, lr} ^
-	mov r0, r0
+	nop
 	add sp, sp, #8
 	ldmia sp!, {r0}
 	msr spsr_fc, r0
@@ -5844,7 +5844,7 @@ FUN_03801848: ; 0x03801848
 	adds r0, r0, r0
 	add r2, r2, r2, lsl #1
 	add pc, pc, r2, lsl #2
-	mov r0, r0
+	nop
 	adcs r3, r1, r3, lsl #1
 	sublo r3, r3, r1
 	adcs r0, r0, r0
@@ -5978,7 +5978,7 @@ FUN_03801A5C: ; 0x03801A5C
 	adds r0, r0, r0
 	add r2, r2, r2, lsl #1
 	add pc, pc, r2, lsl #2
-	mov r0, r0
+	nop
 	adcs r3, r1, r3, lsl #1
 	sublo r3, r3, r1
 	adcs r0, r0, r0

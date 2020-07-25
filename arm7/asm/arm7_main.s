@@ -1863,7 +1863,7 @@ FUN_037F9678: ; 0x037F9678
 	msr cpsr_c, r2
 	mov r0, #1
 	stmia r1, {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip, sp, lr}
-	add r0, pc, #0x8 ; =FUN_037F96AC
+	adr r0, FUN_037F96AC
 	str r0, [r1, #0x3c]
 	mov r0, #0
 	bx lr
