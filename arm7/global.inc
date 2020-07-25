@@ -117,3 +117,5 @@
 .extern _038044C8
 .extern _038044F4
 .extern _03804520
+.extern _0239ADE0
+.extern _0239A8B8

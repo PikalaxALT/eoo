@@ -4767,7 +4767,7 @@ FUN_0231390C: ; 0x0231390C
 	adds r0, r0, r0
 	add r2, r2, r2, lsl #1
 	add pc, pc, r2, lsl #2
-	mov r0, r0
+	nop
 	adcs r3, r1, r3, lsl #1
 	sublo r3, r3, r1
 	adcs r0, r0, r0
@@ -4897,7 +4897,7 @@ FUN_02313B18: ; 0x02313B18
 	adds r0, r0, r0
 	add r2, r2, r2, lsl #1
 	add pc, pc, r2, lsl #2
-	mov r0, r0
+	nop
 	adcs r3, r1, r3, lsl #1
 	sublo r3, r3, r1
 	adcs r0, r0, r0

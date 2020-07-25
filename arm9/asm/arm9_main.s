@@ -4695,7 +4695,7 @@ FUN_02303D24: ; 0x02303D24
 	msr cpsr_c, r2
 	mov r0, #1
 	stmia r1, {r0, r1, r2, r3, r4, r5, r6, r7, r8, sb, sl, fp, ip, sp, lr}
-	add r0, pc, #0x8 ; =_02303D6C
+	adr r0, _02303D6C
 	str r0, [r1, #0x3c]
 	mov r0, #0
 	bx lr
