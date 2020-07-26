@@ -124,8 +124,8 @@ _02300150:
 	ldmia sp!, {r3, r4, r5, pc}
 	arm_func_end FUN_0230013C
 
-	arm_func_start NitroSpMain
-NitroSpMain: ; 0x02300164
+	arm_func_start NitroMain
+NitroMain: ; 0x02300164
 	stmdb sp!, {r4, r5, r6, r7, lr}
 	sub sp, sp, #0x3c
 	sub sp, sp, #0x800
@@ -1088,7 +1088,7 @@ _02300F58: .word 0x88888889
 _02300F5C: .word 0xAAAAAAAB
 _02300F60: .word 0x0000FFFF
 _02300F64: .word _023140B6
-	arm_func_end NitroSpMain
+	arm_func_end NitroMain
 
 	arm_func_start FUN_02300F68
 FUN_02300F68: ; 0x02300F68
@@ -11675,7 +11675,7 @@ _02309740:
 	cmp r1, #0
 	beq _02309794
 	bl FUN_023049B8
-	ldr r1, _02309868 ; =FUN_01FF8000
+	ldr r1, _02309868 ; =OS_IrqHandler
 	add r2, sb, r8
 	cmp r2, r1
 	mov r3, #1
@@ -11755,7 +11755,7 @@ _02309854:
 	bx lr
 	.align 2, 0
 _02309864: .word _02346920
-_02309868: .word FUN_01FF8000
+_02309868: .word OS_IrqHandler
 _0230986C: .word 0x000001FF
 _02309870: .word _0231CF38
 _02309874: .word FUN_02309878

@@ -3,8 +3,8 @@
 
 	.text
 
-	arm_func_start FUN_01FF8000
-FUN_01FF8000: ; 0x01FF8000
+	arm_func_start OS_IrqHandler
+OS_IrqHandler: ; 0x01FF8000
 	stmdb sp!, {lr}
 	mov ip, #0x4000000
 	add ip, ip, #0x210
@@ -29,7 +29,7 @@ _01FF8028:
 	.align 2, 0
 _01FF8050: .word _027E0000
 _01FF8054: .word FUN_01FF8058
-	arm_func_end FUN_01FF8000
+	arm_func_end OS_IrqHandler
 
 	arm_func_start FUN_01FF8058
 FUN_01FF8058: ; 0x01FF8058

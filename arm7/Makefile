@@ -153,6 +153,8 @@ else
 $(BUILD_DIR)/%.o: dep :=
 endif
 
+$(BUILD_DIR)/src/crt0.o: MWCCVERSION = 1.2/sp2p3
+
 $(C_OBJS): $(BUILD_DIR)/%.o: %.c $$(dep)
 	$(CC) -c $(CFLAGS) -o $@ $<
 

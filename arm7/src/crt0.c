@@ -37,6 +37,29 @@ const u32 _start_ModuleParams[] = {
 #define HW_PRV_WRAM_SYSRV_SIZE          0x40
 #define HW_PRV_WRAM_SYSRV               (HW_PRV_WRAM + HW_PRV_WRAM_SIZE - HW_PRV_WRAM_SYSRV_SIZE)
 
+#define HW_PSR_CPU_MODE_MASK       0x1f // CPU mode
+
+#define HW_PSR_USER_MODE           0x10 // USER
+#define HW_PSR_FIQ_MODE            0x11 // FIQ
+#define HW_PSR_IRQ_MODE            0x12 // IRQ
+#define HW_PSR_SVC_MODE            0x13 // Supervisor
+#define HW_PSR_ABORT_MODE          0x17 // Abort (prefetch/data)
+#define HW_PSR_UNDEF_MODE          0x1b // Undefined instruction
+#define HW_PSR_SYS_MODE            0x1f // System
+
+#define HW_PSR_ARM_STATE           0x0 // ARM state
+#define HW_PSR_THUMB_STATE         0x20 // THUMB state
+
+#define HW_PSR_FIQ_DISABLE         0x40 // Disable FIQ
+#define HW_PSR_IRQ_DISABLE         0x80 // Disable IRQ
+#define HW_PSR_IRQ_FIQ_DISABLE     0xc0 // Disable FIQ and IRQ
+
+#define HW_PSR_Q_FLAG              0x08000000   // Sticky overflow
+#define HW_PSR_V_FLAG              0x10000000   // Overflow
+#define HW_PSR_C_FLAG              0x20000000   // Carry / borrow / extend
+#define HW_PSR_Z_FLAG              0x40000000   // Zero
+#define HW_PSR_N_FLAG              0x80000000   // Minus / less than
+
 #define HW_PRV_WRAM_IRQ_STACK_END       (HW_PRV_WRAM_SVC_STACK)
 #define HW_PRV_WRAM_SVC_STACK           (HW_PRV_WRAM_SVC_STACK_END - HW_SVC_STACK_SIZE)
 #define HW_PRV_WRAM_SVC_STACK_END       (HW_PRV_WRAM_SYSRV)
@@ -74,18 +97,18 @@ void _start(void)
     movpl r1, r0
     ldr r2, =HW_PRV_WRAM_END - 0x100
     mov r0, #0
-_02380020:
+@_02380020:
     cmp r1, r2
     stmltia r1!, {r0}
-    blt _02380020
+    blt @_02380020
 
     // Set SVC stack
-    mov r0, #0x13
+    mov r0, #HW_PSR_SVC_MODE
     msr cpsr_c, r0
     ldr sp, =HW_PRV_WRAM_SVC_STACK_END
 
     // Set IRQ stack
-    mov r0, #0x12
+    mov r0, #HW_PSR_IRQ_MODE
     msr cpsr_c, r0
     ldr r0, =HW_PRV_WRAM_IRQ_STACK_END
     mov sp, r0
@@ -93,7 +116,7 @@ _02380020:
     // Set main stack
     ldr r1, =SDK_IRQ_STACKSIZE
     sub r1, r0, r1
-    mov r0, #0x1f
+    mov r0, #HW_PSR_SYS_MODE
     msr cpsr_fsxc, r0
     sub sp, r1, #4
 
@@ -101,20 +124,20 @@ _02380020:
     ldr r0, =0x023FE940
     ldr r1, =HW_CARD_ROM_HEADER
     add r2, r1, #HW_CARD_ROM_HEADER_SIZE
-_02380068:
+@_02380068:
     ldr r3, [r0], #4
     str r3, [r1], #4
     cmp r1, r2
-    bmi _02380068
+    bmi @_02380068
 
     // Copy download parameter
     ldr r0, =0x023FE904
     add r2, r1, #HW_DOWNLOAD_PARAMETER_SIZE
-_02380080:
+@_02380080:
     ldr r3, [r0], #4
     str r3, [r1], #4
     cmp r1, r2
-    bmi _02380080
+    bmi @_02380080
 
     // Do autoload
     bl do_autoload
@@ -124,10 +147,10 @@ _02380080:
     ldr r1, [r0, #0xc]  // SDK_STATIC_BSS_START
     ldr r2, [r0, #0x10] // SDK_STATIC_BSS_END
     mov r0, #0
-_023800A4:
+@_023800A4:
     cmp r1, r2
     strlo r0, [r1], #4
-    blo _023800A4
+    blo @_023800A4
 
     // Detect main memory size
     bl detect_main_memory_size
@@ -189,16 +212,16 @@ void detect_main_memory_size(void)
     mov r1, #0
     ldr r2, =HW_MMEMCHECKER_SUB
     sub r3, r2, #0x400000 // 0x023FFFFA
-_loop:
+@_loop:
     strh r1, [r2]
     ldrh ip, [r3]
     cmp r1, ip
     movne r0, #OS_CONSOLE_SIZE_8MB
-    bne _break
+    bne @_break
     add r1, r1, #1
     cmp r1, #2
-    bne _loop
-_break:
+    bne @_loop
+@_break:
     strh r0, [r2]
     bx lr
 }

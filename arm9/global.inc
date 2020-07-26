@@ -5,7 +5,7 @@
 .extern FUN_02307C74
 .extern FUN_02304ED0
 .extern FUN_02304EE4
-.extern FUN_01FF8000
+.extern OS_IrqHandler
 .extern FUN_01FF81B4
 .extern FUN_01FF8214
 .extern FUN_01FF8288

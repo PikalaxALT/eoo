@@ -166,6 +166,8 @@ else
 $(BUILD_DIR)/%.o: dep :=
 endif
 
+$(BUILD_DIR)/src/crt0.o: MWCCVERSION = 1.2/sp2p3
+
 $(LIBC_OBJS): CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -i include -ir lib/include -W all
 $(C_OBJS) $(LIBC_OBJS): $(BUILD_DIR)/%.o: %.c $$(dep)
 	$(CC) -c $(CFLAGS) -o $@ $<
