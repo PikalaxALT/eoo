@@ -87,9 +87,9 @@ OBJDUMP := $(CROSS)objdump
 OBJCOPY := $(CROSS)objcopy
 
 # ./tools/mwccarm/2.0/base/mwasmarm.exe -proc arm5te asm/arm9_thumb.s -o arm9.o
-ASFLAGS = -proc arm5te
-CFLAGS = -O4,p -gccext,on -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -i include -ir include-mw -ir arm9/lib/include -W all
-LDFLAGS = -map -nodead -w off -proc v5te -interworking -map -symtab -m _start
+ASFLAGS = -proc arm4t
+CFLAGS = -O4,p -gccext,on -proc arm7tdmi -fp soft -lang c99 -Cpp_exceptions off -i include -ir lib/include -W all
+LDFLAGS = -map -nodead -w off -proc v4t -interworking -map -symtab -m _start
 
 # DS TOOLS
 SHA1SUM   = sha1sum
