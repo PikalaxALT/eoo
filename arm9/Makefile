@@ -61,7 +61,7 @@ LIBCXX_FILES := $(foreach dir,$(LIBSRC_DIRS),$(sort $(wildcard $(dir)/*.cpp)))
 LIBS_FILES := $(foreach dir,$(LIBASM_DIRS),$(sort $(wildcard $(dir)/*.s)))
 
 C_OBJS = $(C_FILES:%.c=$(BUILD_DIR)/%.o)
-CXX_OBJS = $(C_FILES:%.cpp=$(BUILD_DIR)/%.o)
+CXX_OBJS = $(CXX_FILES:%.cpp=$(BUILD_DIR)/%.o)
 S_OBJS = $(S_FILES:%.s=$(BUILD_DIR)/%.o)
 LIBC_OBJS = $(LIBC_FILES:%.c=$(BUILD_DIR)/%.o)
 LIBCXX_OBJS = $(LIBC_FILES:%.cpp=$(BUILD_DIR)/%.o)

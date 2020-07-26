@@ -1,4 +1,5 @@
 #include "nitro/types.h"
+#include "mw/init.h"
 
 extern void (*__sinit__[])(void);
 
