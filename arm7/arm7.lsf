@@ -2,6 +2,7 @@ Static arm7
 {
 	Address 0x02380000
 	Object crt0.o
+	StackSize 1024 512
 }
 
 Autoload WRAM
