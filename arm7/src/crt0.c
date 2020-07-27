@@ -83,6 +83,7 @@ const u32 _start_ModuleParams[] = {
 #define OS_CONSOLE_SIZE_4MB       0x00000001
 #define OS_CONSOLE_SIZE_8MB       0x00000002
 
+SDK_WEAK_SYMBOL
 asm
 void _start(void)
 {
@@ -199,6 +200,7 @@ done:
     b _start_AutoloadDoneCallback
 }
 
+SDK_WEAK_SYMBOL
 asm
 void _start_AutoloadDoneCallback(void)
 {

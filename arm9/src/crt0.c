@@ -104,6 +104,7 @@ const u32 _start_ModuleParams[] = {
     (u32)SDK_NITROCODE_LE
 };
 
+SDK_WEAK_SYMBOL
 asm
 void _start(void)
 {
@@ -321,6 +322,7 @@ void do_autoload(void)
     b _start_AutoloadDoneCallback
 }
 
+SDK_WEAK_SYMBOL
 asm
 void _start_AutoloadDoneCallback(void * argv[])
 {
@@ -417,6 +419,7 @@ void init_cp15(void)
     bx lr
 }
 
+SDK_WEAK_SYMBOL
 void NitroStartUp(void)
 {
 }

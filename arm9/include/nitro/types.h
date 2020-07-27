@@ -28,4 +28,7 @@ typedef volatile s64 vs64;
 
 #define NULL ((void*)0)
 
+#define SDK_WEAK_SYMBOL __declspec(weak)
+#define SDK_FORCE_EXPORT __declspec(force_export)
+
 #endif //NITRO_TYPES_H_
