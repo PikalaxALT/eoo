@@ -165,7 +165,7 @@ void _start(void)
 
     // load compressed data
     ldr r1, =_start_ModuleParams
-    ldr r0, [r1, #0x14]
+    ldr r0, [r1, #0x14] // compressed static ptr
     bl MIi_UncompressBackward
 
     // load autoload modules
@@ -173,8 +173,8 @@ void _start(void)
 
     // clear static bss
     ldr r0, =_start_ModuleParams
-    ldr r1, [r0, #0xc]
-    ldr r2, [r0, #0x10]
+    ldr r1, [r0, #0xc]  // SDK_STATIC_BSS_START
+    ldr r2, [r0, #0x10] // SDK_STATIC_BSS_END
     mov r3, r1
     mov r0, #0
 @clear_bss_loop:
@@ -287,9 +287,9 @@ asm
 void do_autoload(void)
 {
     ldr r0, =_start_ModuleParams
-    ldr r1, [r0]
-    ldr r2, [r0, #4]
-    ldr r3, [r0, #8]
+    ldr r1, [r0]     // SDK_AUTOLOAD_LIST
+    ldr r2, [r0, #4] // SDK_AUTOLOAD_LIST_END
+    ldr r3, [r0, #8] // SDK_AUTOLOAD_START
 @loop:
     cmp r1, r2
     beq @exit
