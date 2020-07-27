@@ -86,9 +86,9 @@ AR      := $(CROSS)ar
 OBJDUMP := $(CROSS)objdump
 OBJCOPY := $(CROSS)objcopy
 
-# ./tools/mwccarm/2.0/base/mwasmarm.exe -proc arm5te asm/arm9_thumb.s -o arm9.o
-ASFLAGS = -proc arm4t
-CFLAGS = -O4,p -gccext,on -proc arm7tdmi -fp soft -lang c99 -Cpp_exceptions off -i include -ir lib/include -W all
+DEFINES = -DSDK_TS -DSDK_ARM7
+ASFLAGS = -proc arm4t $(DEFINES)
+CFLAGS = -O4,p -gccext,on -proc arm7tdmi -fp soft -lang c99 -Cpp_exceptions off -ir include -W all $(DEFINES)
 LDFLAGS = -map -nodead -w off -proc v4t -interworking -map -symtab -m _start
 
 # DS TOOLS
@@ -101,7 +101,7 @@ TOOLBASE = $(TOOLDIRS:$(TOOLS_DIR)/%=%)
 TOOLS = $(foreach tool,$(TOOLBASE),$(TOOLS_DIR)/$(tool)/$(tool)$(EXE))
 
 export LM_LICENSE_FILE := $(TOOLS_DIR)/mwccarm/license.dat
-export MWCIncludes := lib/include
+export MWCIncludes := include
 export MWLibraries := lib
 
 ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS))
@@ -148,7 +148,7 @@ clean-tools:
 ## Actual files
 
 ifeq (,$(NODEP))
-$(BUILD_DIR)/%.o: dep = $(shell $(SCANINC) -I include -I lib/include $(filter $*.c,$(C_FILES)) $(filter $*.s,$(S_FILES)))
+$(BUILD_DIR)/%.o: dep = $(shell $(SCANINC) -I include $(filter $*.c,$(C_FILES)) $(filter $*.s,$(S_FILES)))
 else
 $(BUILD_DIR)/%.o: dep :=
 endif

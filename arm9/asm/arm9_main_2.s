@@ -573,7 +573,7 @@ _0230FF00:
 	ldrb r0, [r0, #3]
 	str r0, [sp, #0x10]
 	add r0, r1, #0x3f
-	bl FUN_0231390C
+	bl _s32_div_f
 	ldr r1, [sp, #0x34]
 	mov r4, r0
 	add r0, r1, #4
@@ -1315,7 +1315,7 @@ _023109D4:
 	beq _023109F0
 	mov r0, sl
 	mov r1, r7
-	bl FUN_02313B18
+	bl _u32_div_f
 _023109F0:
 	mul ip, r0, r7
 	mul r3, r0, r6
@@ -1869,7 +1869,7 @@ FUN_02311140: ; 0x02311140
 	sub r0, r0, #1
 	str r2, [sp, #4]
 	mov r6, #0
-	bl FUN_0231390C
+	bl _s32_div_f
 	mov ip, #0
 	mov r0, r0, lsl #1
 	add r0, r0, #2
@@ -2092,7 +2092,7 @@ FUN_0231148C: ; 0x0231148C
 	mov sl, r0
 	mov r1, sl
 	rsb r0, sl, #0
-	bl FUN_02313B18
+	bl _u32_div_f
 	movs r8, r1
 	mov r7, sl
 	mov r5, #0
@@ -2102,11 +2102,11 @@ FUN_0231148C: ; 0x0231148C
 _023114B8:
 	mov r0, r7
 	mov r1, r8
-	bl FUN_02313B18
+	bl _u32_div_f
 	mov sb, r1
 	mov r0, r7
 	mov r1, r8
-	bl FUN_02313B18
+	bl _u32_div_f
 	mla r1, r0, r6, r5
 	mov r5, r6
 	mov r7, r8
@@ -2123,7 +2123,7 @@ _023114F4:
 	bne _02311514
 	mov r0, r5
 	mov r1, sl
-	bl FUN_02313B18
+	bl _u32_div_f
 _02311514:
 	mov r0, r1
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
@@ -4737,8 +4737,8 @@ _023138D8:
 _02313908: .word _02314278
 	arm_func_end FUN_023138AC
 
-	arm_func_start FUN_0231390C
-FUN_0231390C: ; 0x0231390C
+	arm_func_start _s32_div_f
+_s32_div_f: ; 0x0231390C
 	eor ip, r0, r1
 	and ip, ip, #0x80000000
 	cmp r0, #0
@@ -4871,12 +4871,14 @@ _02313B04:
 	ands r3, ip, #1
 	rsbne r1, r1, #0
 	bx lr
-	arm_func_end FUN_0231390C
+	arm_func_end _s32_div_f
 
-	arm_func_start FUN_02313B18
-FUN_02313B18: ; 0x02313B18
+	arm_func_start _u32_div_f
+	arm_func_start _u32_div_not_0_f
+_u32_div_f: ; 0x02313B18
 	cmp r1, #0
 	bxeq lr
+_u32_div_not_0_f:
 	cmp r0, r1
 	movlo r1, r0
 	movlo r0, #0
@@ -4996,7 +4998,7 @@ FUN_02313B18: ; 0x02313B18
 	adcs r0, r0, r0
 	mov r1, r3
 	bx lr
-	arm_func_end FUN_02313B18
+	arm_func_end _u32_div_f
 
 	.rodata
 _02314254:

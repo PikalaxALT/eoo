@@ -14,6 +14,8 @@ typedef float f32;
 typedef double f64;
 
 typedef u32 BOOL;
+#define TRUE  1
+#define FALSE 0
 
 typedef volatile u8 vu8;
 typedef volatile u16 vu16;

@@ -4770,7 +4770,7 @@ _02303E34:
 	ldr r0, [r6, #0x18]
 	add r0, r0, r1
 	sub r0, r0, #1
-	bl FUN_0231390C
+	bl _s32_div_f
 	str r1, [r6, #0x18]
 	ldr r2, [r6, #0x10]
 	ldr r1, [r6, #0x18]
@@ -4824,7 +4824,7 @@ _02303EDC:
 	ldr r0, [r6, #0x18]
 	ldr r1, [r6, #0x14]
 	add r0, r0, #1
-	bl FUN_0231390C
+	bl _s32_div_f
 	str r1, [r6, #0x18]
 	ldr r1, [r6, #0x1c]
 	mov r0, r6
@@ -4871,7 +4871,7 @@ _02303F7C:
 _02303F94:
 	ldr r0, [r6, #0x18]
 	add r0, r0, r2
-	bl FUN_0231390C
+	bl _s32_div_f
 	ldr r2, [r6, #0x10]
 	add r0, r6, #8
 	str r5, [r2, r1, lsl #2]
@@ -14792,7 +14792,7 @@ _0230C0CC:
 	ldr r8, [r7, #8]
 	add r0, r8, r1
 	sub r0, r0, #1
-	bl FUN_02313B18
+	bl _u32_div_f
 	mov r1, sb, lsl #1
 	ldrh r3, [r6, r1]
 	mov r2, r0, lsl #0x10
@@ -18012,7 +18012,7 @@ FUN_0230EC24: ; 0x0230EC24
 	sub r1, r0, #2
 	mov r0, #0x1e
 	str r1, [r2, #8]
-	bl FUN_0231390C
+	bl _s32_div_f
 	ldr r1, _0230EC50 ; =_0234D704
 	mov r2, #0x1e
 	str r0, [r1, #0xc]
@@ -18101,7 +18101,7 @@ FUN_0230ED44: ; 0x0230ED44
 	mov r5, r0
 	ldr r1, [r2, #0xc]
 	add r0, r3, #1
-	bl FUN_0231390C
+	bl _s32_div_f
 	ldr r0, _0230ED8C ; =_0234D704
 	and r3, r1, #0xff
 	strb r1, [r0]

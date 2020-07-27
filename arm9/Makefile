@@ -97,8 +97,9 @@ AR      := $(CROSS)ar
 OBJDUMP := $(CROSS)objdump
 OBJCOPY := $(CROSS)objcopy
 
-ASFLAGS = -proc arm5te
-CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -i include -ir lib/include -W all
+DEFINES = -DSDK_TS -DSDK_ARM9
+ASFLAGS = -proc arm5te $(DEFINES)
+CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -Cpp_exceptions off -ir include -W all $(DEFINES)
 LDFLAGS = -map -nodead -w off -proc v5te -interworking -map -symtab -m _start
 LIBS := -Llib -lsyscall -lstdlib
 ARFLAGS = rcS
@@ -114,7 +115,7 @@ TOOLBASE = $(TOOLDIRS:$(TOOLS_DIR)/%=%)
 TOOLS = $(foreach tool,$(TOOLBASE),$(TOOLS_DIR)/$(tool)/$(tool)$(EXE))
 
 export LM_LICENSE_FILE := $(TOOLS_DIR)/mwccarm/license.dat
-export MWCIncludes := lib/include
+export MWCIncludes := include
 export MWLibraries := lib
 
 ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS) $(LIBSRC_DIRS) $(LIBASM_DIRS))
@@ -161,14 +162,14 @@ clean-tools:
 ## Actual files
 
 ifeq (,$(NODEP))
-$(BUILD_DIR)/%.o: dep = $(shell $(SCANINC) -I include -I lib/include $(filter $*.c,$(C_FILES)) $(filter $*.c,$(CXX_FILES)) $(filter $*.s,$(S_FILES) $(LIBS_FILES)))
+$(BUILD_DIR)/%.o: dep = $(shell $(SCANINC) -I include $(filter $*.c,$(C_FILES)) $(filter $*.c,$(CXX_FILES)) $(filter $*.s,$(S_FILES) $(LIBS_FILES)))
 else
 $(BUILD_DIR)/%.o: dep :=
 endif
 
 $(BUILD_DIR)/src/crt0.o: MWCCVERSION = 1.2/sp2p3
 
-$(LIBC_OBJS): CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -i include -ir lib/include -W all
+$(LIBC_OBJS): CFLAGS = -O4,p -gccext,on -interworking -proc arm946e -fp soft -lang c99 -ir include -W all $(DEFINES)
 $(C_OBJS) $(LIBC_OBJS): $(BUILD_DIR)/%.o: %.c $$(dep)
 	$(CC) -c $(CFLAGS) -o $@ $<
 

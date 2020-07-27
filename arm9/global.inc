@@ -15,8 +15,8 @@
 .extern OSi_ReferSymbol
 .extern FUN_0230F74C
 .extern FUN_0230F820
-.extern FUN_0231390C
-.extern FUN_02313B18
+.extern _s32_div_f
+.extern _u32_div_f
 .extern SVC_CpuSet
 .extern SVC_WaitByLoop
 .extern FUN_0230470C
