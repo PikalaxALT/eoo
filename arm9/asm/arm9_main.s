@@ -41,14 +41,14 @@ _02300074: .word _0231EFE0
 
 	arm_func_start FUN_02300078
 FUN_02300078: ; 0x02300078
-	ldr r0, _02300090 ; =_027E0000
+	ldr r0, _02300090 ; =OS_IRQTable
 	add r0, r0, #0x3000
 	ldr r1, [r0, #0xff8]
 	orr r1, r1, #1
 	str r1, [r0, #0xff8]
 	bx lr
 	.align 2, 0
-_02300090: .word _027E0000
+_02300090: .word OS_IRQTable
 	arm_func_end FUN_02300078
 
 	arm_func_start FUN_02300094
@@ -1230,7 +1230,7 @@ _02301114:
 	ldr r0, [sl, #0x514]
 	cmp r0, r4
 	beq _02301160
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	add r1, sl, #0x500
 	strh r5, [r1, #0x9a]
 	mov r6, r0
@@ -1241,7 +1241,7 @@ _02301114:
 	strh r1, [r8]
 	bl FUN_0230CF50
 	mov r0, r6
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	b _02301180
 _02301160:
 	mov r0, sb
@@ -3227,18 +3227,18 @@ FUN_02302BF8: ; 0x02302BF8
 	stmdb sp!, {r4, r5, r6, lr}
 	mov r5, r0
 	mov r4, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	cmp r5, #0
 	beq _02302C28
-	ldr r1, _02302C6C ; =_027E0000
+	ldr r1, _02302C6C ; =OS_IRQTable
 	mvn r2, r4
 	add r1, r1, #0x3000
 	ldr r3, [r1, #0xff8]
 	and r2, r3, r2
 	str r2, [r1, #0xff8]
 _02302C28:
-	bl FUN_02304EE4
-	ldr r1, _02302C6C ; =_027E0000
+	bl OS_RestoreInterrupts
+	ldr r1, _02302C6C ; =OS_IRQTable
 	add r0, r1, #0x3000
 	ldr r0, [r0, #0xff8]
 	ands r0, r4, r0
@@ -3256,82 +3256,82 @@ _02302C50:
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
 	.align 2, 0
-_02302C6C: .word _027E0000
+_02302C6C: .word OS_IRQTable
 _02302C70: .word 0x00003FF8
 _02302C74: .word 0x027E0060
 	arm_func_end FUN_02302BF8
 
-	arm_func_start FUN_02302C78
-FUN_02302C78: ; 0x02302C78
+	arm_func_start OSi_IrqTimer3
+OSi_IrqTimer3: ; 0x02302C78
 	ldr ip, _02302C84 ; =FUN_02302CF8
 	mov r0, #7
 	bx ip
 	.align 2, 0
 _02302C84: .word FUN_02302CF8
-	arm_func_end FUN_02302C78
+	arm_func_end OSi_IrqTimer3
 
-	arm_func_start FUN_02302C88
-FUN_02302C88: ; 0x02302C88
+	arm_func_start OSi_IrqTimer2
+OSi_IrqTimer2: ; 0x02302C88
 	ldr ip, _02302C94 ; =FUN_02302CF8
 	mov r0, #6
 	bx ip
 	.align 2, 0
 _02302C94: .word FUN_02302CF8
-	arm_func_end FUN_02302C88
+	arm_func_end OSi_IrqTimer2
 
-	arm_func_start FUN_02302C98
-FUN_02302C98: ; 0x02302C98
+	arm_func_start OSi_IrqTimer1
+OSi_IrqTimer1: ; 0x02302C98
 	ldr ip, _02302CA4 ; =FUN_02302CF8
 	mov r0, #5
 	bx ip
 	.align 2, 0
 _02302CA4: .word FUN_02302CF8
-	arm_func_end FUN_02302C98
+	arm_func_end OSi_IrqTimer1
 
-	arm_func_start FUN_02302CA8
-FUN_02302CA8: ; 0x02302CA8
+	arm_func_start OSi_IrqTimer0
+OSi_IrqTimer0: ; 0x02302CA8
 	ldr ip, _02302CB4 ; =FUN_02302CF8
 	mov r0, #4
 	bx ip
 	.align 2, 0
 _02302CB4: .word FUN_02302CF8
-	arm_func_end FUN_02302CA8
+	arm_func_end OSi_IrqTimer0
 
-	arm_func_start FUN_02302CB8
-FUN_02302CB8: ; 0x02302CB8
+	arm_func_start OSi_IrqDma3
+OSi_IrqDma3: ; 0x02302CB8
 	ldr ip, _02302CC4 ; =FUN_02302CF8
 	mov r0, #3
 	bx ip
 	.align 2, 0
 _02302CC4: .word FUN_02302CF8
-	arm_func_end FUN_02302CB8
+	arm_func_end OSi_IrqDma3
 
-	arm_func_start FUN_02302CC8
-FUN_02302CC8: ; 0x02302CC8
+	arm_func_start OSi_IrqDma2
+OSi_IrqDma2: ; 0x02302CC8
 	ldr ip, _02302CD4 ; =FUN_02302CF8
 	mov r0, #2
 	bx ip
 	.align 2, 0
 _02302CD4: .word FUN_02302CF8
-	arm_func_end FUN_02302CC8
+	arm_func_end OSi_IrqDma2
 
-	arm_func_start FUN_02302CD8
-FUN_02302CD8: ; 0x02302CD8
+	arm_func_start OSi_IrqDma1
+OSi_IrqDma1: ; 0x02302CD8
 	ldr ip, _02302CE4 ; =FUN_02302CF8
 	mov r0, #1
 	bx ip
 	.align 2, 0
 _02302CE4: .word FUN_02302CF8
-	arm_func_end FUN_02302CD8
+	arm_func_end OSi_IrqDma1
 
-	arm_func_start FUN_02302CE8
-FUN_02302CE8: ; 0x02302CE8
+	arm_func_start OSi_IrqDma0
+OSi_IrqDma0: ; 0x02302CE8
 	ldr ip, _02302CF4 ; =FUN_02302CF8
 	mov r0, #0
 	bx ip
 	.align 2, 0
 _02302CF4: .word FUN_02302CF8
-	arm_func_end FUN_02302CE8
+	arm_func_end OSi_IrqDma0
 
 	arm_func_start FUN_02302CF8
 FUN_02302CF8: ; 0x02302CF8
@@ -3354,7 +3354,7 @@ FUN_02302CF8: ; 0x02302CF8
 	ldr r0, [r0, r4]
 	blx r1
 _02302D40:
-	ldr r0, _02302D8C ; =_027E0000
+	ldr r0, _02302D8C ; =OS_IRQTable
 	ldr r1, _02302D90 ; =_0234633C
 	add r0, r0, #0x3000
 	ldr r2, [r0, #0xff8]
@@ -3374,18 +3374,18 @@ _02302D40:
 _02302D80: .word _02346338
 _02302D84: .word _0231CF18
 _02302D88: .word _02346340
-_02302D8C: .word _027E0000
+_02302D8C: .word OS_IRQTable
 _02302D90: .word _0234633C
 	arm_func_end FUN_02302CF8
 
-	arm_func_start FUN_02302D94
-FUN_02302D94: ; 0x02302D94
+	arm_func_start OS_IrqDummy
+OS_IrqDummy: ; 0x02302D94
 	bx lr
-	arm_func_end FUN_02302D94
+	arm_func_end OS_IrqDummy
 
 	arm_func_start FUN_02302D98
 FUN_02302D98: ; 0x02302D98
-	ldr ip, _02302DBC ; =_027E0000
+	ldr ip, _02302DBC ; =OS_IRQTable
 	ldr r3, _02302DC0 ; =0xFDDB597D
 	add r0, ip, #0x3000
 	ldr r2, _02302DC4 ; =0x7BF9DD5B
@@ -3395,7 +3395,7 @@ FUN_02302D98: ; 0x02302D98
 	str r2, [r0, -r1]
 	bx lr
 	.align 2, 0
-_02302DBC: .word _027E0000
+_02302DBC: .word OS_IRQTable
 _02302DC0: .word 0xFDDB597D
 _02302DC4: .word 0x7BF9DD5B
 _02302DC8: .word 0x00000800
@@ -3507,7 +3507,7 @@ _02302EFC: .word _0234636C
 FUN_02302F00: ; 0x02302F00
 	stmdb sp!, {r4, r5, r6, r7, r8, lr}
 	mov r8, #0
-	ldr lr, _02302F88 ; =_027E0000
+	ldr lr, _02302F88 ; =OS_IRQTable
 	ldr r5, _02302F8C ; =_02346338
 	mov r6, r8
 	mov ip, r8
@@ -3545,7 +3545,7 @@ _02302F70:
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
 	.align 2, 0
-_02302F88: .word _027E0000
+_02302F88: .word OS_IRQTable
 _02302F8C: .word _02346338
 	arm_func_end FUN_02302F00
 
@@ -3709,7 +3709,7 @@ FUN_023030EC: ; 0x023030EC
 	mov r5, r0
 	b _0230311C
 _02303114:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r5, r0
 _0230311C:
 	mov r0, sb
@@ -3730,7 +3730,7 @@ _02303140:
 	b _0230315C
 _02303154:
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 _0230315C:
 	mov r0, r4
 	add sp, sp, #4
@@ -3766,7 +3766,7 @@ FUN_0230317C: ; 0x0230317C
 	mov r4, r0
 	b _023031C4
 _023031BC:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 _023031C4:
 	mov r0, #0
@@ -3784,7 +3784,7 @@ _023031D8:
 	b _023031FC
 _023031F4:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 _023031FC:
 	mov r0, #0
 	add sp, sp, #4
@@ -3903,7 +3903,7 @@ FUN_02303360: ; 0x02303360
 	arm_func_start FUN_02303368
 FUN_02303368: ; 0x02303368
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230339C ; =_023463A0
 	mov r4, #0
 	ldr r3, [r1]
@@ -3911,7 +3911,7 @@ FUN_02303368: ; 0x02303368
 	subne r2, r3, #1
 	movne r4, r3
 	strne r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	ldmia sp!, {r4, lr}
 	bx lr
@@ -3922,7 +3922,7 @@ _0230339C: .word _023463A0
 	arm_func_start FUN_023033A0
 FUN_023033A0: ; 0x023033A0
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r2, _023033D4 ; =_023463A0
 	mvn r1, #0
 	ldr r3, [r2]
@@ -3930,7 +3930,7 @@ FUN_023033A0: ; 0x023033A0
 	addlo r1, r3, #1
 	movlo r4, r3
 	strlo r1, [r2]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	ldmia sp!, {r4, lr}
 	bx lr
@@ -3953,11 +3953,11 @@ FUN_023033EC: ; 0x023033EC
 	stmdb sp!, {r4, r5, lr}
 	sub sp, sp, #4
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230341C ; =_023463B4
 	ldr r4, [r1, #0xc]
 	str r5, [r1, #0xc]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
@@ -3980,7 +3980,7 @@ FUN_02303428: ; 0x02303428
 	mov r5, r1
 	ldr r8, [r2, #8]
 	mov r7, #0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	b _02303454
 _0230344C:
@@ -3999,7 +3999,7 @@ _02303464:
 	bne _0230348C
 _02303478:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
@@ -4019,7 +4019,7 @@ _0230348C:
 	bl FUN_023039D4
 _023034C0:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #1
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
@@ -4031,11 +4031,11 @@ _023034D8: .word _023463C4
 	arm_func_start FUN_023034DC
 FUN_023034DC: ; 0x023034DC
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	bl FUN_023039D4
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, lr}
 	bx lr
 	arm_func_end FUN_023034DC
@@ -4063,13 +4063,13 @@ FUN_02303528: ; 0x02303528
 	stmdb sp!, {r4, r5, lr}
 	sub sp, sp, #4
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r1, #1
 	mov r4, r0
 	str r1, [r5, #0x64]
 	bl FUN_023039D4
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
 	bx lr
@@ -4080,7 +4080,7 @@ FUN_0230355C: ; 0x0230355C
 	stmdb sp!, {r4, r5, r6, r7, lr}
 	sub sp, sp, #4
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r5]
 	mov r4, r0
 	cmp r1, #0
@@ -4108,7 +4108,7 @@ _023035B4:
 	bl FUN_023039D4
 _023035C8:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
 	bx lr
@@ -4118,7 +4118,7 @@ _023035C8:
 FUN_023035DC: ; 0x023035DC
 	stmdb sp!, {r4, r5, r6, lr}
 	mov r6, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230362C ; =_023463AC
 	mov r5, r0
 	ldr r0, [r1]
@@ -4134,7 +4134,7 @@ _02303610:
 	str r0, [r4, #0x64]
 	bl FUN_023039D4
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
 	.align 2, 0
@@ -4184,7 +4184,7 @@ FUN_02303690: ; 0x02303690
 	mov r1, #0
 	str r1, [r3, #0xb4]
 	blx r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 _023036C0:
 	bl FUN_02303630
 	add sp, sp, #4
@@ -4232,7 +4232,7 @@ _02303740: .word FUN_02303690
 FUN_02303744: ; 0x02303744
 	stmdb sp!, {lr}
 	sub sp, sp, #4
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r0, _0230376C ; =_023463B4
 	mov r1, #0
 	ldr r0, [r0, #4]
@@ -4251,7 +4251,7 @@ FUN_02303770: ; 0x02303770
 	mov r5, r1
 	mov r7, r2
 	mov r6, r3
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	bl FUN_02303CA0
 	ldr r2, [sp, #0x1c]
@@ -4306,7 +4306,7 @@ FUN_02303770: ; 0x02303770
 	mov r0, r4
 	mov r1, #0
 	str r1, [r8, #0xb0]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
 	.align 2, 0
@@ -4341,12 +4341,12 @@ FUN_02303878: ; 0x02303878
 	str r6, [r1, #0x64]
 	str lr, [r1, #0x68]
 	str lr, [r1, #0x74]
-	ldrgt r1, _023039AC ; =_027E0000
+	ldrgt r1, _023039AC ; =OS_IRQTable
 	ldrgt r0, _023039B0 ; =0x00000800
 	addgt r1, r1, #0x3f80
 	subgt r0, r1, r0
 	subgt r4, r0, ip
-	ldr r1, _023039AC ; =_027E0000
+	ldr r1, _023039AC ; =OS_IRQTable
 	ldr r5, _023039B4 ; =_023463B8
 	ldr r2, _023039B8 ; =_023463AC
 	ldr r0, _023039B0 ; =0x00000800
@@ -4395,7 +4395,7 @@ _0230399C: .word 0x00000400
 _023039A0: .word _02346484
 _023039A4: .word _023463B4
 _023039A8: .word 0x027E0080
-_023039AC: .word _027E0000
+_023039AC: .word OS_IRQTable
 _023039B0: .word 0x00000800
 _023039B4: .word _023463B8
 _023039B8: .word _023463AC
@@ -4683,7 +4683,7 @@ FUN_02303CB8: ; 0x02303CB8
 FUN_02303D24: ; 0x02303D24
 	stmdb sp!, {r0, lr}
 	add r0, r0, #0x48
-	ldr r1, _02303D6C ; =FUN_02307C34
+	ldr r1, _02303D6C ; =CP_SaveContext
 	blx r1
 	ldmia sp!, {r0, lr}
 	add r1, r0, #0
@@ -4700,14 +4700,14 @@ FUN_02303D24: ; 0x02303D24
 	mov r0, #0
 	bx lr
 	.align 2, 0
-_02303D6C: .word FUN_02307C34
+_02303D6C: .word CP_SaveContext
 	arm_func_end FUN_02303D24
 
 	arm_func_start FUN_02303D70
 FUN_02303D70: ; 0x02303D70
 	stmdb sp!, {r0, lr}
 	add r0, r0, #0x48
-	ldr r1, _02303DB0 ; =FUN_02307C74
+	ldr r1, _02303DB0 ; =CPi_RestoreContext
 	blx r1
 	ldmia sp!, {r0, lr}
 	mrs r1, cpsr
@@ -4722,7 +4722,7 @@ FUN_02303D70: ; 0x02303D70
 	mov r0, r0
 	subs pc, lr, #4
 	.align 2, 0
-_02303DB0: .word FUN_02307C74
+_02303DB0: .word CPi_RestoreContext
 	arm_func_end FUN_02303D70
 
 	arm_func_start FUN_02303DB4
@@ -4743,7 +4743,7 @@ FUN_02303DCC: ; 0x02303DCC
 	mov r6, r0
 	mov r5, r1
 	mov r7, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0x14]
 	ldr r2, [r6, #0x1c]
 	mov r4, r0
@@ -4754,7 +4754,7 @@ _02303DFC:
 	cmp r7, #0
 	bne _02303E1C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -4781,7 +4781,7 @@ _02303E34:
 	str r1, [r6, #0x1c]
 	bl FUN_0230355C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #1
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -4794,7 +4794,7 @@ FUN_02303E80: ; 0x02303E80
 	mov r6, r0
 	mov r5, r1
 	mov r7, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0x1c]
 	mov r4, r0
 	cmp r1, #0
@@ -4805,7 +4805,7 @@ _02303EAC:
 	cmp r8, #0
 	bne _02303EC8
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
@@ -4832,7 +4832,7 @@ _02303EDC:
 	str r1, [r6, #0x1c]
 	bl FUN_0230355C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #1
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
@@ -4845,7 +4845,7 @@ FUN_02303F2C: ; 0x02303F2C
 	mov r6, r0
 	mov r5, r1
 	mov r7, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r2, [r6, #0x1c]
 	ldr r1, [r6, #0x14]
 	mov r4, r0
@@ -4856,7 +4856,7 @@ _02303F5C:
 	cmp r7, #0
 	bne _02303F7C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -4880,7 +4880,7 @@ _02303F94:
 	str r1, [r6, #0x1c]
 	bl FUN_0230355C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #1
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -5174,7 +5174,7 @@ _02304304:
 	ldmia sp!, {lr}
 	bx lr
 _02304314:
-	ldr r0, _0230439C ; =_027E0000
+	ldr r0, _0230439C ; =OS_IRQTable
 	ldr r1, _023043A0 ; =0x00000400
 	ldr r2, _023043A4 ; =0x00000800
 	add r3, r0, #0x3f80
@@ -5213,7 +5213,7 @@ _02304384:
 	.align 2, 0
 _02304394: .word 0x023E0000
 _02304398: .word _02346610
-_0230439C: .word _027E0000
+_0230439C: .word OS_IRQTable
 _023043A0: .word 0x00000400
 _023043A4: .word 0x00000800
 _023043A8: .word 0x027E0080
@@ -5358,7 +5358,7 @@ FUN_02304574: ; 0x02304574
 	mov r4, r0
 	mov r6, r1
 	mov r5, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r2, _02304610 ; =_02346614
 	add r1, r6, #0x1f
 	ldr r2, [r2, r4, lsl #2]
@@ -5382,7 +5382,7 @@ _023045B0:
 	str r1, [r6, #8]
 	str r6, [ip, #4]
 	str r2, [ip, #8]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
@@ -5392,7 +5392,7 @@ _023045F0:
 	add ip, ip, #0xc
 	blt _023045B0
 _02304600:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mvn r0, #0
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
@@ -5408,7 +5408,7 @@ FUN_02304614: ; 0x02304614
 	mov r6, r1
 	mov r5, r2
 	mov r4, r3
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r2, _023046CC ; =_02346614
 	mov r1, #0xc
 	str r6, [r2, r7, lsl #2]
@@ -5445,7 +5445,7 @@ _02304694:
 	bic r1, r1, #0x1f
 	str r1, [r6, #8]
 	str r2, [r6, #0xc]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r0, [r6, #8]
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -5460,12 +5460,12 @@ FUN_023046D0: ; 0x023046D0
 	sub sp, sp, #4
 	mov r4, r0
 	mov r5, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02304708 ; =_02346614
 	ldr r1, [r1, r4, lsl #2]
 	ldr r4, [r1]
 	str r5, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
@@ -5481,7 +5481,7 @@ FUN_0230470C: ; 0x0230470C
 	mov r7, r0
 	mov r5, r1
 	mov r4, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230477C ; =_02346614
 	mov r6, r0
 	ldr r0, [r1, r7, lsl #2]
@@ -5500,7 +5500,7 @@ FUN_0230470C: ; 0x0230470C
 	bl FUN_023048AC
 	str r0, [r7, #4]
 	mov r0, r6
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
 	bx lr
@@ -5515,13 +5515,13 @@ FUN_02304780: ; 0x02304780
 	mov r6, r0
 	mov r5, r1
 	mov r7, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _023048A8 ; =_02346614
 	mov r4, r0
 	ldr r1, [r1, r6, lsl #2]
 	cmp r1, #0
 	bne _023047C0
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -5550,7 +5550,7 @@ _02304808:
 	cmp r5, #0
 	bne _02304828
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -5585,7 +5585,7 @@ _02304880:
 	bl FUN_0230499C
 	str r0, [r6, #8]
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add r0, r5, #0x20
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -5899,7 +5899,7 @@ _02304C1C: .word _023466C4
 FUN_02304C20: ; 0x02304C20
 	stmdb sp!, {lr}
 	sub sp, sp, #0xc
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02304CC0 ; =0x04000100
 	ldr r3, _02304CC4 ; =_023466D0
 	ldrh ip, [r1]
@@ -5927,7 +5927,7 @@ FUN_02304C20: ; 0x02304C20
 	str r3, [sp, #4]
 	str r1, [sp, #8]
 _02304C94:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r2, [sp, #4]
 	ldr r1, [sp, #8]
 	ldrh r0, [sp]
@@ -6098,24 +6098,24 @@ FUN_02304EBC: ; 0x02304EBC
 	bx lr
 	arm_func_end FUN_02304EBC
 
-	arm_func_start FUN_02304ED0
-FUN_02304ED0: ; 0x02304ED0
+	arm_func_start OS_DisableInterrupts
+OS_DisableInterrupts: ; 0x02304ED0
 	mrs r0, cpsr
 	orr r1, r0, #0x80
 	msr cpsr_c, r1
 	and r0, r0, #0x80
 	bx lr
-	arm_func_end FUN_02304ED0
+	arm_func_end OS_DisableInterrupts
 
-	arm_func_start FUN_02304EE4
-FUN_02304EE4: ; 0x02304EE4
+	arm_func_start OS_RestoreInterrupts
+OS_RestoreInterrupts: ; 0x02304EE4
 	mrs r1, cpsr
 	bic r2, r1, #0x80
 	orr r2, r2, r0
 	msr cpsr_c, r2
 	and r0, r1, #0x80
 	bx lr
-	arm_func_end FUN_02304EE4
+	arm_func_end OS_RestoreInterrupts
 
 	arm_func_start FUN_02304EFC
 FUN_02304EFC: ; 0x02304EFC
@@ -6281,7 +6281,7 @@ FUN_023050C0: ; 0x023050C0
 	stmdb sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	mov r5, r0
 	mov sl, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r4, _0230513C ; =_02346700
 	ldr r1, _02305140 ; =0x000001FF
 	ldr r2, [r4]
@@ -6308,7 +6308,7 @@ _023050F4:
 	b _023050F4
 _0230512C:
 	mov r0, r8
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
 	.align 2, 0
@@ -6348,7 +6348,7 @@ FUN_02305188: ; 0x02305188
 	stmdb sp!, {lr}
 	sub sp, sp, #4
 _02305190:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	bl FUN_0230517C
 	b _02305190
 	arm_func_end FUN_02305188
@@ -6456,7 +6456,7 @@ _023052CC: .word 0x040000B8
 FUN_023052D0: ; 0x023052D0
 	stmdb sp!, {r4, lr}
 	mov r4, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r1, #6
 	mul r1, r4, r1
 	add r1, r1, #5
@@ -6483,7 +6483,7 @@ FUN_023052D0: ; 0x023052D0
 	str r3, [r2, #4]
 	str r1, [r2, #8]
 _02305340:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, lr}
 	bx lr
 	.align 2, 0
@@ -6517,7 +6517,7 @@ _02305390:
 	mov r1, r7
 	mov r2, r6
 	orr r3, r3, #0x80000000
-	bl FUN_01FF8214
+	bl MIi_DmaSetParams_wait
 _023053B4:
 	ldr r0, [r4]
 	ands r0, r0, #0x80000000
@@ -6555,7 +6555,7 @@ _0230540C:
 	mov r1, r7
 	mov r2, r6
 	orr r3, r3, #0x84000000
-	bl FUN_01FF8214
+	bl MIi_DmaSetParams_wait
 _02305430:
 	ldr r0, [r4]
 	ands r0, r0, #0x80000000
@@ -6584,7 +6584,7 @@ _02305478:
 	ldr r0, [r5]
 	ands r0, r0, #0x80000000
 	bne _02305478
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _023054D4 ; =0x040000E0
 	mov r2, r8, lsl #2
 	mov r3, r4, lsr #2
@@ -6595,9 +6595,9 @@ _02305478:
 	add r1, r1, r8, lsl #2
 	orr r3, r3, #0x85000000
 	str r6, [ip, #0xe0]
-	bl FUN_01FF81B4
+	bl MIi_DmaSetParams_wait_noInt
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 _023054BC:
 	ldr r0, [r5]
 	ands r0, r0, #0x80000000
@@ -6852,7 +6852,7 @@ _023057A8:
 	mov r0, r6
 	mov r1, r5
 	mov r2, r4
-	bl FUN_01FF8288
+	bl MIi_DmaSetParams
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
 	bx lr
@@ -6901,17 +6901,17 @@ _02305830:
 	orrne r0, r0, #0xc000
 	strneh r0, [sl]
 	bne _02305878
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldrh r1, [sl]
 	ands r1, r1, #0x100
 	beq _02305868
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r1, r8
 	b _02305878
 _02305868:
 	ldr r1, [r7]
 	str r1, [sp]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r1, r6
 _02305878:
 	cmp r1, r8
@@ -6945,16 +6945,16 @@ _023058C4:
 	orrne r0, r0, #0xc000
 	strneh r0, [sl]
 	bne _02305830
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldrh r1, [sl]
 	ands r1, r1, #2
 	beq _02305908
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	b _02305830
 _02305908:
 	ldr r1, [sp]
 	str r1, [r4]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	b _02305830
 	arm_func_end FUN_0230580C
 
@@ -6996,12 +6996,12 @@ FUN_02305930: ; 0x02305930
 	strneh r1, [r2]
 	ldmneia sp!, {lr}
 	bxne lr
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _023059DC ; =0x04000184
 	ldrh r1, [r1]
 	ands r1, r1, #2
 	beq _023059BC
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mvn r0, #1
 	ldmia sp!, {lr}
@@ -7010,7 +7010,7 @@ _023059BC:
 	ldr r2, [sp]
 	ldr r1, _023059E0 ; =0x04000188
 	str r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	add sp, sp, #4
 	ldmia sp!, {lr}
@@ -7041,7 +7041,7 @@ FUN_02305A0C: ; 0x02305A0C
 	sub sp, sp, #4
 	mov r4, r0
 	mov r5, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02305A70 ; =_0234671C
 	cmp r5, #0
 	str r5, [r1, r4, lsl #2]
@@ -7060,7 +7060,7 @@ _02305A48:
 	and r1, r2, r1
 	str r1, [r3, #0x388]
 _02305A60:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
 	bx lr
@@ -7073,7 +7073,7 @@ _02305A74: .word 0x027FFC00
 FUN_02305A78: ; 0x02305A78
 	stmdb sp!, {r4, r5, lr}
 	sub sp, sp, #4
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02305B68 ; =_02346718
 	mov r4, r0
 	ldrh r0, [r1]
@@ -7133,7 +7133,7 @@ _02305B4C:
 	b _02305AFC
 _02305B54:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
 	bx lr
@@ -7215,7 +7215,7 @@ _02305C54:
 	moveq r0, #0
 	cmp r0, #0
 	beq _02305CF0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r5, #0x1c]
 	mov r4, r0
 	ands r0, r1, #0x200
@@ -7230,7 +7230,7 @@ _02305C8C:
 _02305CA0:
 	mov r0, r4
 	ldr r6, [r8, #0x14]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	b _02305CF0
 _02305CB0:
 	ldr r0, [r8, #0xc]
@@ -7262,7 +7262,7 @@ FUN_02305D00: ; 0x02305D00
 	stmdb sp!, {r4, r5, r6, lr}
 	mov r6, r0
 	mov r5, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6]
 	mov r4, r0
 	ldr r0, [r6, #4]
@@ -7281,7 +7281,7 @@ FUN_02305D00: ; 0x02305D00
 	str r5, [r6, #0x14]
 	bl FUN_0230355C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
 	arm_func_end FUN_02305D00
@@ -7981,7 +7981,7 @@ _023066CC:
 	str r1, [r5, #0x1c]
 	b _02306718
 _023066DC:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r5, #0x1c]
 	mov r4, r0
 	ands r0, r1, #0x200
@@ -7995,7 +7995,7 @@ _023066F4:
 	bne _023066F4
 _02306708:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r0, [r5, #0x24]
 	ldr r0, [r0, #0x14]
 _02306718:
@@ -8060,7 +8060,7 @@ FUN_02306790: ; 0x02306790
 	bx lr
 _023067DC:
 	ldr r5, [r4, #0x24]
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	str r6, [r5, #0x14]
 	ldr r1, [r4, #0x1c]
 	mov r5, r0
@@ -8069,7 +8069,7 @@ _023067DC:
 	str r1, [r4, #0x1c]
 	bl FUN_0230355C
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
 	arm_func_end FUN_02306790
@@ -8214,7 +8214,7 @@ FUN_023069D4: ; 0x023069D4
 	mov r5, r2
 	mov r7, r0
 	mov r8, #0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	mov r0, r6
 	mov r1, r5
@@ -8256,7 +8256,7 @@ _02306A58:
 	str r0, [r7, #0x1c]
 _02306A78:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r8
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
@@ -8271,7 +8271,7 @@ FUN_02306A94: ; 0x02306A94
 	sub sp, sp, #4
 	bl FUN_02307034
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02306AE0 ; =_0234679C
 	ldr r4, [r1]
 	b _02306AB8
@@ -8284,7 +8284,7 @@ _02306AB8:
 	cmp r1, r5
 	bne _02306AB4
 _02306ACC:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
@@ -8325,7 +8325,7 @@ FUN_02306B1C: ; 0x02306B1C
 	mov r5, r2, lsl r1
 	orr r0, r0, #1
 	str r0, [r7, #0xc]
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0x1c]
 	mov r4, r0
 	ands r0, r1, #0x80
@@ -8334,7 +8334,7 @@ FUN_02306B1C: ; 0x02306B1C
 	mov r1, #3
 	bl FUN_02305D00
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -8376,7 +8376,7 @@ _02306BCC:
 	mov r0, r4
 	orr r1, r1, #0x10
 	str r1, [r6, #0x1c]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r0, [r6, #0x58]
 	ands r0, r0, #0x200
 	beq _02306C2C
@@ -8385,7 +8385,7 @@ _02306BCC:
 	mov r1, #9
 	blx r2
 _02306C2C:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r7, #0xc]
 	orr r1, r1, #0x40
 	str r1, [r7, #0xc]
@@ -8395,7 +8395,7 @@ _02306C2C:
 	moveq r1, #0
 	cmp r1, #0
 	bne _02306C70
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r7
 	bl FUN_02306D20
 	add sp, sp, #4
@@ -8403,7 +8403,7 @@ _02306C2C:
 	ldmia sp!, {r4, r5, r6, r7, lr}
 	bx lr
 _02306C70:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	b _02306CC4
 _02306C78:
 	ldr r0, [r7, #0xc]
@@ -8413,7 +8413,7 @@ _02306C78:
 	cmp r0, #0
 	bne _02306CA8
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #1
 	ldmia sp!, {r4, r5, r6, r7, lr}
@@ -8425,7 +8425,7 @@ _02306CA8:
 	ands r0, r0, #0x40
 	beq _02306CA8
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 _02306CC4:
 	mov r0, r7
 	bl FUN_02306CD8
@@ -8467,7 +8467,7 @@ FUN_02306D20: ; 0x02306D20
 	mov r7, #0
 	mov r8, #1
 _02306D3C:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0xc]
 	mov r4, r0
 	orr r0, r1, #0x40
@@ -8481,7 +8481,7 @@ _02306D3C:
 	add r0, r6, #0x18
 	bl FUN_0230355C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
 _02306D80:
@@ -8489,7 +8489,7 @@ _02306D80:
 	mov r0, r4
 	orr r1, r1, #8
 	str r1, [r6, #0xc]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r1, [r6, #0x10]
 	mov r0, r6
 	bl FUN_02305B84
@@ -8509,7 +8509,7 @@ FUN_02306DC4: ; 0x02306DC4
 	stmdb sp!, {r4, r5, r6, r7, r8, sb, lr}
 	sub sp, sp, #0x4c
 	mov r6, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0x1c]
 	mov r5, r0
 	ands r0, r1, #0x20
@@ -8567,7 +8567,7 @@ _02306E4C:
 	orrne r0, r0, #0x10
 	strne r0, [r6, #0x1c]
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	cmp r7, #0
 	beq _02306ED4
 	ldr r0, [r6, #0x58]
@@ -8578,7 +8578,7 @@ _02306E4C:
 	mov r1, #9
 	blx r2
 _02306ED4:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r4, #0xc]
 	mov r5, r0
 	orr r0, r1, #0x40
@@ -8592,14 +8592,14 @@ _02306ED4:
 	add r0, r4, #0x18
 	bl FUN_0230355C
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #0x4c
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, lr}
 	bx lr
 _02306F20:
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #0x4c
 	mov r0, r4
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, lr}
@@ -8635,7 +8635,7 @@ _02306F78:
 	bl FUN_0230355C
 _02306FA4:
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	add sp, sp, #0x4c
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, lr}
@@ -8730,7 +8730,7 @@ FUN_023070A8: ; 0x023070A8
 	sub sp, sp, #4
 	mov r6, r0
 	mov r5, #0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0xc]
 	mov r4, r0
 	ands r0, r1, #1
@@ -8766,7 +8766,7 @@ _02307118:
 	bne _02307118
 _02307138:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	cmp r5, #0
 	beq _0230715C
 	mov r0, r6
@@ -9575,8 +9575,8 @@ _02307B94:
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, fp, ip, pc}
 	arm_func_end FUN_023079B4
 
-	arm_func_start FUN_02307C34
-FUN_02307C34: ; 0x02307C34
+	arm_func_start CP_SaveContext
+CP_SaveContext: ; 0x02307C34
 	ldr r1, _02307C70 ; =0x04000290
 	stmdb sp!, {r4}
 	ldmia r1, {r2, r3, r4, ip}
@@ -9594,10 +9594,10 @@ FUN_02307C34: ; 0x02307C34
 	bx lr
 	.align 2, 0
 _02307C70: .word 0x04000290
-	arm_func_end FUN_02307C34
+	arm_func_end CP_SaveContext
 
-	arm_func_start FUN_02307C74
-FUN_02307C74: ; 0x02307C74
+	arm_func_start CPi_RestoreContext
+CPi_RestoreContext: ; 0x02307C74
 	stmdb sp!, {r4}
 	ldr r1, _02307CAC ; =0x04000290
 	ldmia r0, {r2, r3, r4, ip}
@@ -9614,7 +9614,7 @@ FUN_02307C74: ; 0x02307C74
 	bx lr
 	.align 2, 0
 _02307CAC: .word 0x04000290
-	arm_func_end FUN_02307C74
+	arm_func_end CPi_RestoreContext
 
 	arm_func_start FUN_02307CB0
 FUN_02307CB0: ; 0x02307CB0
@@ -10362,12 +10362,12 @@ _023085F4: .word _02346834
 FUN_023085F8: ; 0x023085F8
 	stmdb sp!, {lr}
 	sub sp, sp, #4
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02308644 ; =_02346834
 	ldr r2, [r1]
 	cmp r2, #0
 	beq _02308628
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	mov r0, #0
 	ldmia sp!, {lr}
@@ -10375,7 +10375,7 @@ FUN_023085F8: ; 0x023085F8
 _02308628:
 	mov r2, #1
 	str r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #1
 	add sp, sp, #4
 	ldmia sp!, {lr}
@@ -10854,19 +10854,19 @@ FUN_02308CB8: ; 0x02308CB8
 	mov r6, r0
 	mov r5, r1
 	mov r4, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02308D30 ; =_02346888
 	ldr r2, [r1]
 	cmp r2, #0
 	beq _02308CEC
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #1
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
 _02308CEC:
 	mov r2, #1
 	str r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r0, _02308D30 ; =_02346888
 	mov r2, #1
 	mov r1, #0
@@ -11047,7 +11047,7 @@ FUN_02308F08: ; 0x02308F08
 FUN_02308F28: ; 0x02308F28
 	stmdb sp!, {r4, r5, r6, lr}
 	ldr r6, _02308F80 ; =_02346920
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0x114]
 	mov r5, r0
 	ands r0, r1, #4
@@ -11061,7 +11061,7 @@ _02308F48:
 	bne _02308F48
 _02308F5C:
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r0, [r6]
 	ldr r0, [r0]
 	cmp r0, #0
@@ -11183,7 +11183,7 @@ FUN_023090D0: ; 0x023090D0
 	ldr r5, _02309170 ; =_02346920
 	mov r7, r0
 	mov r6, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r1, r5
 	mov r4, r0
 	ldr r0, [r1, #8]
@@ -11218,7 +11218,7 @@ _02309150:
 	mov r2, #0
 	mov r0, r4
 	str r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, lr}
 	bx lr
@@ -11233,7 +11233,7 @@ FUN_02309174: ; 0x02309174
 	ldr r5, _0230920C ; =_02346920
 	mov r7, r0
 	mov r6, r1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r5, #8]
 	mov r4, r0
 	cmp r1, r7
@@ -11266,7 +11266,7 @@ _023091E0:
 	ldr r1, [r5]
 	mov r2, #0
 	str r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, lr}
 	bx lr
@@ -11362,7 +11362,7 @@ FUN_023092F4: ; 0x023092F4
 	mov r7, r3
 	ldr fp, _0230940C ; =_02346F60
 	bl FUN_02308F94
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r6, #0x114]
 	mov r5, r0
 	ands r0, r1, #4
@@ -11383,7 +11383,7 @@ _02309344:
 	str r0, [r6, #0x38]
 	mov r0, r5
 	str r1, [r6, #0x3c]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r0, _02309410 ; =_02346F40
 	str sl, [r6, #0x28]
 	ldr r0, [r0]
@@ -11456,7 +11456,7 @@ _02309444:
 	str r1, [r0]
 	ldr r6, [r7, #0x38]
 	ldr r5, [r7, #0x3c]
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r7, #0x114]
 	mov r4, r0
 	bic r0, r1, #0x4c
@@ -11470,7 +11470,7 @@ _02309444:
 	bl FUN_02303528
 _02309494:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	cmp r6, #0
 	addeq sp, sp, #4
 	ldmeqia sp!, {r4, r5, r6, r7, lr}
@@ -11489,7 +11489,7 @@ _023094C4: .word _02346920
 FUN_023094C8: ; 0x023094C8
 	stmdb sp!, {r4, r5, r6, r7, r8, lr}
 	ldr r5, _02309598 ; =_02346920
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r5, #0x114]
 	mov r4, r0
 	ands r0, r1, #4
@@ -11509,7 +11509,7 @@ _023094FC:
 	str r1, [r5, #0x38]
 	mov r0, r4
 	str r1, [r5, #0x3c]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	bl FUN_0230959C
 	ldr r7, _02309598 ; =_02346920
 	mov r8, r0
@@ -11520,7 +11520,7 @@ _023094FC:
 	str r1, [r0]
 	ldr r6, [r7, #0x38]
 	ldr r5, [r7, #0x3c]
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r7, #0x114]
 	mov r4, r0
 	bic r0, r1, #0x4c
@@ -11534,7 +11534,7 @@ _023094FC:
 	bl FUN_02303528
 _02309574:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	cmp r6, #0
 	beq _0230958C
 	mov r0, r5
@@ -11718,7 +11718,7 @@ _023097C0:
 	orr r0, r0, #0xa1000000
 	str r0, [sl, #4]
 	beq _02309854
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r5, r0
 	mov r0, sb
 	mov r1, r8
@@ -11746,7 +11746,7 @@ _0230981C:
 	mov r0, #0x80000
 	bl FUN_02302E48
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	bl FUN_02309958
 _02309854:
 	mov r0, r7
@@ -11791,7 +11791,7 @@ FUN_02309878: ; 0x02309878
 	str r1, [r0]
 	ldr r6, [r7, #0x38]
 	ldr r5, [r7, #0x3c]
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r7, #0x114]
 	mov r4, r0
 	bic r0, r1, #0x4c
@@ -11805,7 +11805,7 @@ FUN_02309878: ; 0x02309878
 	bl FUN_02303528
 _02309918:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	cmp r6, #0
 	addeq sp, sp, #4
 	ldmeqia sp!, {r4, r5, r6, r7, lr}
@@ -11949,7 +11949,7 @@ FUN_02309AE8: ; 0x02309AE8
 	mov r6, #0
 	add r7, r5, #0x44
 _02309AFC:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r5, #0x114]
 	mov r4, r0
 	ands r0, r1, #8
@@ -11963,7 +11963,7 @@ _02309B10:
 	beq _02309B10
 _02309B28:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r1, [r5, #0x40]
 	mov r0, r5
 	blx r1
@@ -12054,14 +12054,14 @@ FUN_02309C14: ; 0x02309C14
 	addeq sp, sp, #8
 	ldmeqia sp!, {r4, lr}
 	bxeq lr
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	mov r0, #0xe
 	mov r1, #0x11
 	mov r2, #0
 	bl FUN_02309D1C
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #8
 	ldmia sp!, {r4, lr}
 	bx lr
@@ -12189,13 +12189,13 @@ _02309DD0: .word _02347184
 	arm_func_start FUN_02309DD4
 FUN_02309DD4: ; 0x02309DD4
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02309E04 ; =_0234718C
 	ldr r1, [r1]
 	cmp r1, #0
 	ldrne r4, [r1, #0x14c]
 	moveq r4, #0
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4, lsl #0x10
 	mov r0, r0, lsr #0x10
 	ldmia sp!, {r4, lr}
@@ -12207,14 +12207,14 @@ _02309E04: .word _0234718C
 	arm_func_start FUN_02309E08
 FUN_02309E08: ; 0x02309E08
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _02309E38 ; =_0234718C
 	ldr r1, [r1]
 	cmp r1, #0
 	addne r1, r1, #0x100
 	ldrneh r4, [r1, #0x50]
 	moveq r4, #0
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	ldmia sp!, {r4, lr}
 	bx lr
@@ -12739,13 +12739,13 @@ _0230A524: .word _0234718C
 	arm_func_start FUN_0230A528
 FUN_0230A528: ; 0x0230A528
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	bl FUN_0230A340
 	cmp r0, #0
 	beq _0230A554
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #3
 	ldmia sp!, {r4, lr}
 	bx lr
@@ -12766,7 +12766,7 @@ _0230A554:
 	mov r0, r4
 	str r3, [r2]
 	strh r3, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	ldmia sp!, {r4, lr}
 	bx lr
@@ -12781,34 +12781,34 @@ FUN_0230A5AC: ; 0x0230A5AC
 	mov r6, r0
 	mov r5, r1
 	mov r7, r2
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230A78C ; =_02347188
 	mov r4, r0
 	ldrh r1, [r1]
 	cmp r1, #0
 	beq _0230A5E4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #3
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
 _0230A5E4:
 	cmp r6, #0
 	bne _0230A5FC
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #6
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
 _0230A5FC:
 	cmp r5, #3
 	bls _0230A614
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #6
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
 _0230A614:
 	ands r1, r6, #0x1f
 	beq _0230A62C
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #6
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
@@ -12820,7 +12820,7 @@ _0230A62C:
 	cmp r0, #0
 	bne _0230A658
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #4
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
@@ -12900,7 +12900,7 @@ _0230A730:
 	mov r2, #1
 	mov r0, r4
 	strh r2, [r1]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, r7, r8, sb, sl, lr}
 	bx lr
@@ -13158,13 +13158,13 @@ FUN_0230AA84: ; 0x0230AA84
 	strh r3, [sp, #0x12]
 	bl FUN_0230509C
 _0230AAEC:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r8, r0
 	bl FUN_0230A340
 	movs r7, r0
 	beq _0230AB18
 	mov r0, r8
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #0x48
 	mov r0, r7
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
@@ -13184,7 +13184,7 @@ _0230AB18:
 	blx r5
 _0230AB48:
 	mov r0, r8
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	add sp, sp, #0x48
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
@@ -13197,13 +13197,13 @@ _0230AB60: .word 0x0000FFFF
 FUN_0230AB64: ; 0x0230AB64
 	stmdb sp!, {r4, r5, r6, lr}
 	mov r6, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r5, r0
 	bl FUN_0230A340
 	movs r4, r0
 	beq _0230AB94
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
@@ -13211,7 +13211,7 @@ _0230AB94:
 	bl FUN_0230A35C
 	str r6, [r0, #0xc8]
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	ldmia sp!, {r4, r5, r6, lr}
 	bx lr
@@ -13886,7 +13886,7 @@ _0230B4BC:
 FUN_0230B4EC: ; 0x0230B4EC
 	stmdb sp!, {r3, r4, r5, lr}
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	bl FUN_0230C404
 	mov r1, #0x590
@@ -13916,7 +13916,7 @@ FUN_0230B4EC: ; 0x0230B4EC
 	bl FUN_0230E8B0
 	mov r5, r0
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r5
 	ldmia sp!, {r3, r4, r5, pc}
 	.align 2, 0
@@ -13968,12 +13968,12 @@ _0230B608: .word 0x0000FFFF
 FUN_0230B60C: ; 0x0230B60C
 	stmdb sp!, {r4, lr}
 	mov r4, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230B630 ; =_0234D6CC
 	ldr r1, [r1]
 	add r1, r1, #0x1000
 	str r4, [r1, #0x4e4]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, pc}
 	.align 2, 0
 _0230B630: .word _0234D6CC
@@ -13996,7 +13996,7 @@ _0230B650: .word _0234D6CC
 FUN_0230B654: ; 0x0230B654
 	stmdb sp!, {r4, lr}
 	mov r4, #0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230B69C ; =_0234D6CC
 	ldr r2, [r1]
 	cmp r2, #0
@@ -14010,7 +14010,7 @@ FUN_0230B654: ; 0x0230B654
 	moveq r4, #1
 	streqh r4, [r1, #0xf2]
 _0230B690:
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	ldmia sp!, {r4, pc}
 	.align 2, 0
@@ -17244,7 +17244,7 @@ FUN_0230E1FC: ; 0x0230E1FC
 	bl FUN_0230A7D8
 	mov r7, r0
 _0230E250:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r3, _0230E3D8 ; =0x0000FFFF
 	ldr r1, _0230E3DC ; =_0231CF40
 	mov r2, #5
@@ -17343,7 +17343,7 @@ _0230E348:
 	strh r2, [r1, #0x16]
 	add r1, r5, #0x1000
 	str r3, [r1, #0x31c]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, #0
 	ldmia sp!, {r3, r4, r5, r6, r7, r8, sb, pc}
 	.align 2, 0
@@ -17415,7 +17415,7 @@ _0230E4B0: .word _0234D6C0
 	arm_func_start FUN_0230E4B4
 FUN_0230E4B4: ; 0x0230E4B4
 	stmdb sp!, {r4, r5, r6, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r3, _0230E58C ; =_0234D6C0
 	mov r4, r0
 	ldr r1, [r3, #0xc]
@@ -17465,7 +17465,7 @@ FUN_0230E4B4: ; 0x0230E4B4
 	bl FUN_0230E3E0
 	mov r5, r0
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r5
 	ldmia sp!, {r4, r5, r6, pc}
 	.align 2, 0
@@ -17507,7 +17507,7 @@ _0230E5E0: .word FUN_0230E5A0
 FUN_0230E5E4: ; 0x0230E5E4
 	stmdb sp!, {r3, r4, r5, lr}
 	mov r5, #1
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230E658 ; =_0234D6C0
 	mov r4, r0
 	ldr r2, [r1, #8]
@@ -17533,7 +17533,7 @@ _0230E640:
 	mov r5, r0
 _0230E648:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r5
 	ldmia sp!, {r3, r4, r5, pc}
 	.align 2, 0
@@ -17544,7 +17544,7 @@ _0230E65C: .word FUN_0230E5D8
 	arm_func_start FUN_0230E660
 FUN_0230E660: ; 0x0230E660
 	stmdb sp!, {r4, lr}
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230E698 ; =_0234D6C0
 	mov r4, r0
 	ldr r0, [r1, #0xc]
@@ -17556,7 +17556,7 @@ FUN_0230E660: ; 0x0230E660
 _0230E688:
 	bl FUN_0230E5E4
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, pc}
 	.align 2, 0
 _0230E698: .word _0234D6C0
@@ -17914,7 +17914,7 @@ _0230EAF0:
 	moveq r6, r0
 	movne r6, #0x1f
 _0230EAFC:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [sb, #4]
 	mov r5, r0
 	bic r0, r1, #1
@@ -17975,7 +17975,7 @@ _0230EBC4:
 	str sb, [r1]
 _0230EBCC:
 	mov r0, r5
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r3, r4, r5, r6, r7, r8, sb, pc}
 	.align 2, 0
 _0230EBD8: .word _0234D700
@@ -17985,7 +17985,7 @@ _0230EBD8: .word _0234D700
 FUN_0230EBDC: ; 0x0230EBDC
 	stmdb sp!, {r3, r4, r5, lr}
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r4, r0
 	bl FUN_0230EA54
 	cmp r0, #0
@@ -17999,7 +17999,7 @@ FUN_0230EBDC: ; 0x0230EBDC
 	bl FUN_0230EA70
 _0230EC14:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r3, r4, r5, pc}
 	.align 2, 0
 _0230EC20: .word _0234D700
@@ -18159,7 +18159,7 @@ FUN_0230EE08: ; 0x0230EE08
 	stmdb sp!, {r4, r5, lr}
 	sub sp, sp, #4
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230EE58 ; =_0234D718
 	mov r4, r0
 	str r5, [r1]
@@ -18173,7 +18173,7 @@ FUN_0230EE08: ; 0x0230EE08
 	bl FUN_023049EC
 _0230EE44:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #4
 	ldmia sp!, {r4, r5, lr}
 	bx lr
@@ -18221,7 +18221,7 @@ FUN_0230EEC0: ; 0x0230EEC0
 	bl FUN_02302FA8
 _0230EED8:
 	ldr r0, [r4, #4]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, lr}
 	bx lr
 	arm_func_end FUN_0230EEC0
@@ -18235,7 +18235,7 @@ FUN_0230EEE8: ; 0x0230EEE8
 	ldr r5, _0230EF64 ; =0x027FFFE8
 	mov r4, #1
 _0230EF00:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	str r0, [r6, #4]
 	mov r0, r5
 	bl FUN_0230300C
@@ -18253,7 +18253,7 @@ _0230EF00:
 	ldmeqia sp!, {r4, r5, r6, r7, lr}
 	bxeq lr
 	ldr r0, [r6, #4]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	mov r0, r4
 	blx SVC_WaitByLoop
 	b _0230EF00
@@ -18740,7 +18740,7 @@ _0230F58C:
 	mov r1, r8
 	mov r2, r7
 	bl FUN_02305584
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [r4, #0xc0]
 	mov sl, r0
 	cmp r1, #0
@@ -18761,7 +18761,7 @@ _0230F5C4:
 	ldr r1, [lr]
 	mov r0, sl
 	str r1, [ip]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldr r1, [sp]
 	cmp r1, #0
 	beq _0230F604
@@ -18769,7 +18769,7 @@ _0230F5C4:
 	blx r1
 	str r0, [sp, #8]
 _0230F604:
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, [sp, #4]
 	mov sl, r0
 	strb r8, [r6, #0x22]
@@ -18783,7 +18783,7 @@ _0230F624:
 	beq _0230F640
 	mov r0, sl
 	str r8, [r4, #0xc0]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	b _0230F58C
 _0230F640:
 	bl FUN_02303744
@@ -18810,7 +18810,7 @@ FUN_0230F66C: ; 0x0230F66C
 	stmdb sp!, {r4, r5, lr}
 	sub sp, sp, #0xc
 	mov r5, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	ldr r1, _0230F6EC ; =_0234D8E8
 	mov r4, r0
 	ldr r0, [r1]
@@ -18836,7 +18836,7 @@ FUN_0230F66C: ; 0x0230F66C
 	bl FUN_02303528
 _0230F6D8:
 	mov r0, r4
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	add sp, sp, #0xc
 	ldmia sp!, {r4, r5, lr}
 	bx lr

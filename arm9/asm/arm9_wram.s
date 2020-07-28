@@ -48,7 +48,7 @@ _0237D05C:
 FUN_0237D06C: ; 0x0237D06C
 	stmdb sp!, {r4, lr}
 	mov r4, r0
-	bl FUN_02304ED0
+	bl OS_DisableInterrupts
 	mov r1, #6
 	mul r1, r4, r1
 	add r1, r1, #5
@@ -62,7 +62,7 @@ FUN_0237D06C: ; 0x0237D06C
 	strh r2, [r1, #0xb0]
 	ldrh r2, [r1, #0xb0]
 	ldrh r1, [r1, #0xb0]
-	bl FUN_02304EE4
+	bl OS_RestoreInterrupts
 	ldmia sp!, {r4, pc}
 	arm_func_end FUN_0237D06C
 

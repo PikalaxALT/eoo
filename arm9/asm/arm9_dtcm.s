@@ -2,34 +2,34 @@
 	.include "global.inc"
 
 	.rodata
-	.global _027E0000
-_027E0000:
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302CA8
-	.word FUN_02302C98
-	.word FUN_02302C88
-	.word FUN_02302C78
-	.word FUN_02302D94
-	.word FUN_02302CE8
-	.word FUN_02302CD8
-	.word FUN_02302CC8
-	.word FUN_02302CB8
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word FUN_02302D94
-	.word 0x00000000
-	.word 0x00000000
+	.global OS_IRQTable
+OS_IRQTable:
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OSi_IrqTimer0
+	.word OSi_IrqTimer1
+	.word OSi_IrqTimer2
+	.word OSi_IrqTimer3
+	.word OS_IrqDummy
+	.word OSi_IrqDma0
+	.word OSi_IrqDma1
+	.word OSi_IrqDma2
+	.word OSi_IrqDma3
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word OS_IrqDummy
+	.word 0
+	.word 0
 
 	.bss
-	.global _027E0060
-_027E0060:
+	.global OSi_IrqThreadQueue
+OSi_IrqThreadQueue:
 	.space 0x20
