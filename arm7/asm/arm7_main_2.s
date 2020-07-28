@@ -602,11 +602,11 @@ _037FD3CC:
 	b _037FD434
 _037FD3F4:
 	mul r0, sb, r8
-	bl FUN_03801A54
+	bl _u32_div_f
 	ldr r1, [sl, #0xc]
 	add r0, r1, r0
 	mov r1, r8
-	bl FUN_03801A54
+	bl _u32_div_f
 	add r2, r7, sb, lsl #1
 	strh r1, [r2, #0xcc]
 	str sb, [sp]
@@ -2126,7 +2126,7 @@ _037FE7EC:
 	ldr r0, _037FE8A8 ; =_03803F54
 	ldr r0, [r0]
 	ldrh r1, [r4, #0xa]
-	bl FUN_03801A54
+	bl _u32_div_f
 	ldr r5, [r6, r5]
 	ldr lr, [r4, #4]
 	mov r3, #0
@@ -2220,24 +2220,24 @@ FUN_037FE924: ; 0x037FE924
 	addls r7, r7, #0xc
 	mov r0, r8
 	mov r1, #0x190
-	bl FUN_03801A54
+	bl _u32_div_f
 	mov r5, r0
 	mov r0, r8
 	mov r1, #0x64
-	bl FUN_03801A54
+	bl _u32_div_f
 	mov r4, r0
 	mov r0, #0xd
 	mul r0, r7, r0
 	add r0, r0, #8
 	mov r1, #5
-	bl FUN_03801A54
+	bl _u32_div_f
 	add r1, r8, r8, lsr #2
 	sub r1, r1, r4
 	add r1, r5, r1
 	add r0, r1, r0
 	add r0, r6, r0
 	mov r1, #7
-	bl FUN_03801A54
+	bl _u32_div_f
 	mov r0, r1
 	ldmia sp!, {r4, r5, r6, r7, r8, lr}
 	bx lr
@@ -5644,16 +5644,18 @@ _03801638: .word 0x040001C0
 _0380163C: .word 0x040001C2
 	arm_func_end FUN_03801600
 
-	arm_func_start FUN_03801640
-FUN_03801640: ; 0x03801640
+; stdlibmwcc
+
+	arm_func_start _ll_mod
+_ll_mod: ; 0x03801640
 	stmdb sp!, {r4, r5, r6, r7, fp, ip, lr}
 	mov r4, r1
 	orr r4, r4, #1
 	b _03801660
-	arm_func_end FUN_03801640
+	arm_func_end _ll_mod
 
-	arm_func_start FUN_03801650
-FUN_03801650: ; 0x03801650
+	arm_func_start _ll_sdiv
+_ll_sdiv: ; 0x03801650
 	stmdb sp!, {r4, r5, r6, r7, fp, ip, lr}
 	eor r4, r1, r3
 	mov r4, r4, asr #1
@@ -5671,7 +5673,7 @@ _03801670:
 	orrs r6, r5, r6
 	bne _038016A4
 	mov r1, r2
-	bl FUN_03801848
+	bl _s32_div_f
 	ands r4, r4, #1
 	movne r0, r1
 	mov r1, r0, asr #0x1f
@@ -5760,10 +5762,7 @@ _03801790:
 	orr r0, r0, r1, lsl r7
 	mov r1, r1, lsr r5
 	b _038017C8
-	arm_func_end FUN_03801650
-
-	arm_func_start FUN_038017C0
-FUN_038017C0: ; 0x038017C0
+_038017C0:
 	mov r0, r1, lsr r7
 	mov r1, #0
 _038017C8:
@@ -5784,17 +5783,17 @@ _038017EC:
 	blt _038017D8
 	ldmia sp!, {r4, r5, r6, r7, fp, ip, lr}
 	bx lr
-	arm_func_end FUN_038017C0
+	arm_func_end _ll_sdiv
 
-	arm_func_start FUN_03801800
-FUN_03801800: ; 0x03801800
+	arm_func_start _ull_div
+_ull_div: ; 0x03801800
 	stmdb sp!, {r4, r5, r6, r7, fp, ip, lr}
 	mov r4, #0
 	b _03801814
-	arm_func_end FUN_03801800
+	arm_func_end _ull_div
 
-	arm_func_start FUN_0380180C
-FUN_0380180C: ; 0x0380180C
+	arm_func_start _ull_mod
+_ull_mod: ; 0x0380180C
 	stmdb sp!, {r4, r5, r6, r7, fp, ip, lr}
 	mov r4, #1
 _03801814:
@@ -5806,16 +5805,16 @@ _03801824:
 	orrs r5, r1, r3
 	bne _038016C4
 	mov r1, r2
-	bl FUN_03801A5C
+	bl _u32_div_not_0_f
 	cmp r4, #0
 	movne r0, r1
 	mov r1, #0
 	ldmia sp!, {r4, r5, r6, r7, fp, ip, lr}
 	bx lr
-	arm_func_end FUN_0380180C
+	arm_func_end _ull_mod
 
-	arm_func_start FUN_03801848
-FUN_03801848: ; 0x03801848
+	arm_func_start _s32_div_f
+_s32_div_f: ; 0x03801848
 	eor ip, r0, r1
 	and ip, ip, #0x80000000
 	cmp r0, #0
@@ -5948,16 +5947,16 @@ _03801A40:
 	ands r3, ip, #1
 	rsbne r1, r1, #0
 	bx lr
-	arm_func_end FUN_03801848
+	arm_func_end _s32_div_f
 
-	arm_func_start FUN_03801A54
-FUN_03801A54: ; 0x03801A54
+	arm_func_start _u32_div_f
+_u32_div_f: ; 0x03801A54
 	cmp r1, #0
 	bxeq lr
-	arm_func_end FUN_03801A54
+	arm_func_end _u32_div_f
 
-	arm_func_start FUN_03801A5C
-FUN_03801A5C: ; 0x03801A5C
+	arm_func_start _u32_div_not_0_f
+_u32_div_not_0_f: ; 0x03801A5C
 	cmp r0, r1
 	movlo r1, r0
 	movlo r0, #0
@@ -6077,7 +6076,7 @@ FUN_03801A5C: ; 0x03801A5C
 	adcs r0, r0, r0
 	mov r1, r3
 	bx lr
-	arm_func_end FUN_03801A5C
+	arm_func_end _u32_div_not_0_f
 
 	.global _03801C38
 _03801C38: ; crc table
@@ -6168,7 +6167,7 @@ _03801D7C:
 	blt _03801E30
 	add r0, sl, sb
 	mov r1, #2
-	bl FUN_03801848
+	bl _s32_div_f
 	mov r8, r0
 	mov r7, #0
 	mov fp, #2
@@ -6177,7 +6176,7 @@ _03801D7C:
 _03801DB8:
 	mov r0, r7
 	mov r1, fp
-	bl FUN_03801848
+	bl _s32_div_f
 	mov r0, r1, lsl #1
 	sub r0, r0, #1
 	mla r8, r7, r0, r8

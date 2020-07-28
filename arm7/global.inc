@@ -12,8 +12,8 @@
 .extern FUN_037FE784
 .extern FUN_037FF19C
 .extern FUN_0380142C
-.extern FUN_03801800
-.extern FUN_03801848
+.extern _ull_div
+.extern _s32_div_f
 .extern FUN_03801D14
 .extern SVC_CpuSet
 .extern SVC_Halt
@@ -82,7 +82,7 @@
 .extern FUN_037FE760
 .extern FUN_03800D74
 .extern FUN_0380154C
-.extern FUN_03801A54
+.extern _u32_div_f
 .extern FUN_03801E40
 .extern FUN_03801E9C
 .extern SDK_AUTOLOAD_LIST

@@ -1955,7 +1955,7 @@ _037F9794:
 	ldr r0, [r6, #0x18]
 	add r0, r0, #1
 	ldr r1, [r6, #0x14]
-	bl FUN_03801848
+	bl _s32_div_f
 	str r1, [r6, #0x18]
 	ldr r0, [r6, #0x1c]
 	sub r0, r0, #1
@@ -1998,7 +1998,7 @@ _037F9834:
 	ble _037F9814
 	ldr r0, [r6, #0x18]
 	add r0, r0, r2
-	bl FUN_03801848
+	bl _s32_div_f
 	ldr r0, [r6, #0x10]
 	str r5, [r0, r1, lsl #2]
 	ldr r0, [r6, #0x1c]
@@ -3031,7 +3031,7 @@ FUN_037FA4EC: ; 0x037FA4EC
 	sbc r1, r1, r6
 	mov r2, r5
 	mov r3, r4
-	bl FUN_03801800
+	bl _ull_div
 	mov r2, #1
 	adds r2, r0, r2
 	adc r0, r1, #0
@@ -3752,7 +3752,7 @@ FUN_037FAE04: ; 0x037FAE04
 	stmdb sp!, {lr}
 	sub sp, sp, #4
 	mov r1, #4
-	bl FUN_03801848
+	bl _s32_div_f
 	bl FUN_037F8BD0
 	add sp, sp, #4
 	ldmia sp!, {lr}
