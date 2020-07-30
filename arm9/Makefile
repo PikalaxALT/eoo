@@ -49,8 +49,7 @@ OVERLAYS :=
 # Directories containing source files
 SRC_DIRS := src
 ASM_DIRS := asm
-LIBSRC_DIRS := lib/stdlib
-LIBASM_DIRS := lib/syscall
+LIBSRC_DIRS := lib/stdlib lib/syscall
 
 # sorting wildcards required for versions of make >= 3.8.2 and < 4.3 for consistent builds
 C_FILES := $(foreach dir,$(SRC_DIRS),$(sort $(wildcard $(dir)/*.c)))
@@ -58,7 +57,7 @@ CXX_FILES := $(foreach dir,$(SRC_DIRS),$(sort $(wildcard $(dir)/*.cpp)))
 S_FILES := $(foreach dir,$(ASM_DIRS),$(sort $(wildcard $(dir)/*.s)))
 LIBC_FILES := $(foreach dir,$(LIBSRC_DIRS),$(sort $(wildcard $(dir)/*.c)))
 LIBCXX_FILES := $(foreach dir,$(LIBSRC_DIRS),$(sort $(wildcard $(dir)/*.cpp)))
-LIBS_FILES := $(foreach dir,$(LIBASM_DIRS),$(sort $(wildcard $(dir)/*.s)))
+LIBS_FILES := $(foreach dir,$(LIBSRC_DIRS),$(sort $(wildcard $(dir)/*.s)))
 
 C_OBJS = $(C_FILES:%.c=$(BUILD_DIR)/%.o)
 CXX_OBJS = $(CXX_FILES:%.cpp=$(BUILD_DIR)/%.o)
@@ -118,7 +117,7 @@ export LM_LICENSE_FILE := $(TOOLS_DIR)/mwccarm/license.dat
 export MWCIncludes := include
 export MWLibraries := lib
 
-ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS) $(LIBSRC_DIRS) $(LIBASM_DIRS))
+ALL_DIRS := $(BUILD_DIR) $(addprefix $(BUILD_DIR)/,$(SRC_DIRS) $(ASM_DIRS) $(LIBSRC_DIRS) $(LIBSRC_DIRS))
 
 ## Targets
 
@@ -181,8 +180,8 @@ SYSCALL_OBJS := $(SYSCALL_SRCS:%.s=$(BUILD_DIR)/%.o)
 $(BUILD_DIR)/lib/libsyscall.a: $(SYSCALL_OBJS)
 	$(AR) $(ARFLAGS) -o $@ $^
 
-STDLIB_SRCS := lib/stdlib/_sinit.c
-STDLIB_OBJS := $(STDLIB_SRCS:%.c=$(BUILD_DIR)/%.o)
+STDLIB_SRCS := lib/stdlib/_div_f.s lib/stdlib/_sinit.c
+STDLIB_OBJS := $(patsubst %.s,$(BUILD_DIR)/%.o,$(patsubst %.c,$(BUILD_DIR)/%.o,$(STDLIB_SRCS)))
 $(BUILD_DIR)/lib/libstdlib.a: $(STDLIB_OBJS)
 	$(AR) $(ARFLAGS) -o $@ $^
 
